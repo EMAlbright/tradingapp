@@ -1,0 +1,67 @@
+.mainContainer {
+    background-color: #2b547c;
+    min-height: 100vh;
+    display: flex;
+  }
+  
+  .topbarContainer {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+  }
+  
+  .HeaderLine {
+    position: relative;
+    background-color: #c0c0c0;
+    height: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 25px;
+    font-weight: 700;
+    color: #1a2836;
+    margin-bottom: 20px;
+  }
+  
+  .Options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .Options div {
+    margin-bottom: 10px;
+  }
+  
+  .Options a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .tradingViewChart {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .Account {
+    position: relative;
+    left: 0;
+  }
+  
+  .Account img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .searchAsset {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
