@@ -1,0 +1,12 @@
+.balance{
+    color: white; /* Text color */
+    text-shadow: 
+    -1px -1px 0 #000, /* Top-left shadow */
+    1px -1px 0 #000,  /* Top-right shadow */
+    -1px 1px 0 #000,  /* Bottom-left shadow */
+    1px 1px 0 #000;   /* Bottom-right shadow */
+    font-size: 20px; 
+    border-radius: 20px; 
+    padding: -20px; 
+    padding-top: 50px;
+}

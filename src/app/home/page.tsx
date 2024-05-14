@@ -3,12 +3,15 @@ import './page.css';
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import StockList from '../tradingview/page';
+import { useRouter } from "next/navigation";
+import Balance from '../userBalance/page';
 
 export default function Home() {
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const router = useRouter();
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY + window.innerHeight;
@@ -56,6 +59,9 @@ export default function Home() {
       </div>
       <div className='Profile'>
         <Link href="/profile">Profile</Link>
+      </div>
+      <div className='balance'>
+        < Balance/>
       </div>
     </div>
   </div>
