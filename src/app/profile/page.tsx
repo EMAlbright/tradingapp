@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import "./profile.css";
 
 export default function ProfilePage (){
     const router = useRouter();
@@ -26,10 +27,17 @@ export default function ProfilePage (){
         setData(res.data.data._id);
     }
 
+    const onHome = async() =>{
+        router.push("/home");
+    }
 
     return (
         <div className="flex flex-col items-center
         justify-center min-h-screen py-2">
+            <button className="homeButton" onClick={onHome}>
+                <i className="animation">
+                    </i>Home<i className="animation"></i>
+            </button>
             <h1>Profile</h1>
             <hr/>
             <p>Profile Page</p>

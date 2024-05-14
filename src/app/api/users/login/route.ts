@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
             id: user._id,
             username: user.username,
             email: user.email,
+            balance: user.balance,
         }
         //create token
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "1d"})
