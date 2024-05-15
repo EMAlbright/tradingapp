@@ -27,6 +27,14 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 50000,
     },
+    tradePositions: {
+        type: [{
+            symbol: String,
+            quantity: Number,
+            purchasePrice: Number
+          }],
+        default: [],
+    },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
