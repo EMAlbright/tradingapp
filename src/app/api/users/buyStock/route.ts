@@ -4,7 +4,7 @@ import User from "@/models/userModel";
 import { use } from "react";
 
 export async function POST(request: NextRequest){
-    const{symbol, quantity} = await request.json();
+    const{symbol, quantity, position} = await request.json();
     const userID = await getDataFromToken(request);
     const user = await User.findOne({_id:userID});
     const key = process.env.NEXT_PUBLIC_FINNHUB_API;
@@ -31,6 +31,7 @@ export async function POST(request: NextRequest){
     return NextResponse.json({ 
         balance: user.balance, 
         tradePosition: {
+            position: position,
             symbol: symbol,
             quantity: quantity,
             price: currPrice

@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema({
     },
     tradePositions: {
         type: [{
+            position: String,
             symbol: String,
             quantity: Number,
             price: Number

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 import User from "@/models/userModel";
+import BuyStockPage from "@/app/buyStock/page";
 
 export async function POST(request: NextRequest){
     const{symbol, quantity} = await request.json();

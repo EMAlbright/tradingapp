@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 
 export default function BuyStockPage() {
     const [symbol, setSymbol] = useState("");
+    const [position, setPosition] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -34,7 +35,13 @@ export default function BuyStockPage() {
     // check if user has the quantity or less than in position
     // if true, execute trade
         try{
+            
             setLoading(true);
+            const key = process.env.NEXT_PUBLIC_FINNHUB_API;
+            //fix key later
+            const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${key}`);
+            const data = await response.json();
+            const price = data.c;
         }
         catch(error: any){
             return toast.error(error.response?.data?.error || "Stock purchase failed");
@@ -46,6 +53,7 @@ export default function BuyStockPage() {
         try{
             setLoading(true);
             const response = await axios.post("/api/users/buyStock", {symbol, quantity, price})
+            setPosition("Buy");
             toast.success("Stock purchased!")
             router.push("/home")
         }
