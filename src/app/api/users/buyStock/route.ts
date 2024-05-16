@@ -7,8 +7,9 @@ export async function POST(request: NextRequest){
     const{symbol, quantity} = await request.json();
     const userID = await getDataFromToken(request);
     const user = await User.findOne({_id:userID});
-    
-    const finnhubRes =await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${process.env.FINNHUB_API!}`);
+    const key = process.env.NEXT_PUBLIC_FINNHUB_API;
+    //fix key later
+    const finnhubRes =await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${key}`);
     const stockData = await finnhubRes.json();
     const currPrice = stockData.c;
     const total = currPrice * quantity;
@@ -18,12 +19,21 @@ export async function POST(request: NextRequest){
     }
 
     user.balance -= total;
-    user.positions.push({
+    
+    user.tradePositions.push({
         symbol,
         quantity,
-        purchasePrice: currPrice
-    });
-    await user.save();
+        price: currPrice
+    }); 
 
-    return NextResponse.json({ message: "Stock purchased successfully" });
+    await user.save();
+    console.log(user.balance);
+    return NextResponse.json({ 
+        balance: user.balance, 
+        tradePosition: {
+            symbol: symbol,
+            quantity: quantity,
+            price: currPrice
+        }
+    });
 }

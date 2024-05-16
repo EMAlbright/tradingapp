@@ -5,12 +5,13 @@ import React, { useState, useEffect } from 'react';
 import StockList from '../tradingview/page';
 import { useRouter } from "next/navigation";
 import Balance from '../userBalance/page';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Home() {
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
   const router = useRouter();
 
   const handleScroll = () => {
@@ -48,7 +49,7 @@ export default function Home() {
         </Link>
       </div>
       <div className="Trade">
-        <Link href="/Trade" className="Trade">
+        <Link href="/trade" className="Trade">
           Trade
         </Link>
       </div>
