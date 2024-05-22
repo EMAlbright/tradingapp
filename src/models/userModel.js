@@ -29,11 +29,15 @@ const userSchema = new mongoose.Schema({
     },
     tradePositions: {
         type: [{
-            position: String,
+            position: { 
+                type: String,
+                enum: ['buy', 'sell'],
+                required: true,
+            },
             symbol: String,
             quantity: Number,
             price: Number
-          }],
+        }],
         default: [],
     },
     forgotPasswordToken: String,
