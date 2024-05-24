@@ -30,25 +30,6 @@ export default function BuyStockPage() {
         }
     };
 
-    const onSellStock = async() => {
-        //check if user has symbol in a position
-    // check if user has the quantity or less than in position
-    // if true, execute trade
-        try{
-            
-            setLoading(true);
-            const key = process.env.NEXT_PUBLIC_FINNHUB_API;
-            //fix key later
-            const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${key}`);
-            const data = await response.json();
-            const price = data.c;
-        }
-        catch(error: any){
-            return toast.error(error.response?.data?.error || "Stock purchase failed");
-
-        }
-    }
-
     const onBuyStock = async() => {
         try{
             setLoading(true);

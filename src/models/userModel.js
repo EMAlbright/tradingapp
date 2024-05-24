@@ -29,11 +29,6 @@ const userSchema = new mongoose.Schema({
     },
     tradePositions: {
         type: [{
-            position: { 
-                type: String,
-                enum: ['buy', 'sell'],
-                required: true,
-            },
             symbol: String,
             quantity: Number,
             price: Number

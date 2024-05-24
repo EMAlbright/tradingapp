@@ -47,7 +47,6 @@ export async function POST(request: NextRequest){
     return NextResponse.json({ 
         balance: user.balance, 
         tradePosition: {
-            position: 'sell',
             symbol,
             quantity,
             price: currPrice
