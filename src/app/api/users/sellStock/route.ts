@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 import User from "@/models/userModel";
-import BuyStockPage from "@/app/buyStock/page";
 
-interface TradePosition {
-    position: 'buy' | 'sell';
-    symbol: string;
-    quantity: number;
-    price: number;
-  }
+export interface iTradePosition {
+   symbol: string;
+   quantity: number;
+   price: number; 
+}
 
 export async function POST(request: NextRequest){
     const{symbol, quantity} = await request.json();
@@ -20,24 +18,26 @@ export async function POST(request: NextRequest){
     const stockData = await finnhubRes.json();
     const currPrice = stockData.c;
     const sellTotal = currPrice * quantity;
+    
+    const position = user.tradePosition.find((position: iTradePosition) => position.symbol === symbol);
 
-    //check if user has enough stock
-    const buyPosition = user.tradePositions.find((position: TradePosition) => 
-        position.symbol === symbol && position.position === 'buy' && position.quantity >= quantity
-    );    
-    
-    buyPosition.quantity -= quantity;
-    
-    if (buyPosition.quantity === 0) {
-        user.tradePositions = user.tradePositions.filter((position: TradePosition) => position !== buyPosition);
-    }
     // if true, execute trade
-    user.tradePositions.push({
+    if(!position || position.quantity < quantity){
+        return NextResponse.json({error: "error, not enough stock"})
+    }
+
+    position.quantity -= quantity;
+
+    // If the quantity drops to zero, remove the trade position
+    if (position.quantity === 0) {
+        user.tradePositions = user.tradePositions.filter((position: iTradePosition) => position.symbol !== symbol);
+    }
+    /* user.tradePositions.push({
         position: 'sell',
         symbol,
         quantity,
         price: currPrice
-    }); 
+    });  */
 
     //add to balance
     user.balance += sellTotal;
