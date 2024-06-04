@@ -19,28 +19,19 @@ export async function POST(request: NextRequest){
     const currPrice = stockData.c;
     const sellTotal = currPrice * quantity;
     
-    const position = user.tradePosition.find((position: iTradePosition) => position.symbol === symbol);
-
-    // if true, execute trade
-    if(!position || position.quantity < quantity){
-        return NextResponse.json({error: "error, not enough stock"})
+    const existingPosition: typeof user.tradePositions[0] | undefined = user.tradePositions.find(
+        (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol
+      );
+    if(existingPosition){
+        if(existingPosition.quantity >= quantity){
+            existingPosition.quantity -= quantity;
+            //add to balance
+            user.balance += sellTotal;
+        }
     }
-
-    position.quantity -= quantity;
-
-    // If the quantity drops to zero, remove the trade position
-    if (position.quantity === 0) {
-        user.tradePositions = user.tradePositions.filter((position: iTradePosition) => position.symbol !== symbol);
+    else{
+        console.log("You do not own this stock!");
     }
-    /* user.tradePositions.push({
-        position: 'sell',
-        symbol,
-        quantity,
-        price: currPrice
-    });  */
-
-    //add to balance
-    user.balance += sellTotal;
 
     await user.save();
     console.log(user.balance);

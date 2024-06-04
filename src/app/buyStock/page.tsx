@@ -45,6 +45,19 @@ export default function BuyStockPage() {
         }
     }
 
+    const onSellStock = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post("/api/users/sellStock", { symbol, quantity });
+            toast.success("Stock sold!");
+            router.push("/home");
+        } catch (error: any) {
+            toast.error(error.response?.data?.error || "Stock sale failed");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return(
         <div className="mainContainer">
             <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -75,6 +88,12 @@ export default function BuyStockPage() {
                     >
                     Buy Stock
                     </button>
+                    <button
+                    onClick={onSellStock}
+                    className="p-2 border border-gray-300 rounded-lg mb-4"
+                >
+                    Sell Stock
+                </button>
             </div>
         </div>
     )

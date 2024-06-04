@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 import User from "@/models/userModel";
 import { use } from "react";
+import { connect } from "@/dbConfig/dbConfig";
 
+connect();
 export async function POST(request: NextRequest){
     const{symbol, quantity, position} = await request.json();
     const userID = await getDataFromToken(request);
@@ -17,14 +19,22 @@ export async function POST(request: NextRequest){
     if(user.balance < total){
         return NextResponse.json({error: "insufficient balance"})
     }
-
+    //check if user has the symbol/ticker already
+    const existingPosition: typeof user.tradePositions[0] | undefined = user.tradePositions.find(
+        (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol
+      );
+    if(existingPosition){
+        existingPosition.quantity += quantity;
+    }
+    else {
+        // Add new trade position
+        user.tradePositions.push({
+            symbol,
+            quantity,
+            price: currPrice
+    });
+    }
     user.balance -= total;
-    
-    user.tradePositions.push({
-        symbol,
-        quantity,
-        price: currPrice
-    }); 
 
     await user.save();
     console.log(user.balance);
