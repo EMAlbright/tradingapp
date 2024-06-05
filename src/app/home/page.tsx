@@ -2,11 +2,11 @@
 import './page.css';
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
-import StockList from '../tradingview/page';
 import { useRouter } from "next/navigation";
 import Balance from '../userBalance/page';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import TradingViewWidget from '../tradingview/page';
 
 export default function Home() {
 
@@ -67,7 +67,7 @@ export default function Home() {
     </div>
   </div>
   <div className="tradingViewChart" style={{ height: "500px" }}>
-     <StockList />
+     <TradingViewWidget />
   </div>
 </main>
   );

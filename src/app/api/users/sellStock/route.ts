@@ -34,7 +34,7 @@ export async function POST(request: NextRequest){
     }
 
     await user.save();
-    console.log(user.balance);
+    
     return NextResponse.json({ 
         balance: user.balance, 
         tradePosition: {

@@ -21,12 +21,12 @@ function TradingViewWidget() {
           "locale": "en",
           "enable_publishing": false,
           "allow_symbol_change": true,
-          "calendar": false,
+          "calendar": true,
           "support_host": "https://www.tradingview.com"
         }`;
       container.current.appendChild(script);
       return () => {
-       
+        container.current.removeChild(script);
       };
     },
     []
@@ -39,4 +39,4 @@ function TradingViewWidget() {
   );
 }
 
-export default memo(TradingViewWidget);
+export default React.memo(TradingViewWidget);
