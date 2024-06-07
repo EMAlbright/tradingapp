@@ -7,6 +7,7 @@ import Balance from '../userBalance/page';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import TradingViewWidget from '../tradingview/page';
+import FearGreedIndex from '../components/fearGreed';
 
 export default function Home() {
 
@@ -69,6 +70,7 @@ export default function Home() {
   <div className="tradingViewChart" style={{ height: "500px" }}>
      <TradingViewWidget />
   </div>
+  <div className='fearGreed'><FearGreedIndex /></div>
 </main>
   );
 }

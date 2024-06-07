@@ -24,9 +24,13 @@ function TradingViewWidget() {
           "calendar": true,
           "support_host": "https://www.tradingview.com"
         }`;
-      container.current.appendChild(script);
+        if (container.current) {
+          container.current.appendChild(script);
+        }
       return () => {
-        container.current.removeChild(script);
+        if(container.current){
+          container.current.removeChild(script);
+        }
       };
     },
     []
