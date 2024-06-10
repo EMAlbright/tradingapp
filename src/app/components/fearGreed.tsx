@@ -30,9 +30,9 @@ const FearGreedIndex = () => {
     };
 
     fetchIndex();
-    /* const interval = setInterval(fetchIndex, 60000); // Fetch every minute
+    const interval = setInterval(fetchIndex, 60000); // Fetch every minute
 
-    return () => clearInterval(interval); */
+    return () => clearInterval(interval); 
   }, []);
 
   if (loading) {
