@@ -1,0 +1,74 @@
+.container {
+    background-color: #2b547c;
+    color: #eaeaea;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.portfolioTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.portfolioTable th, portfolioTable td {
+    padding: 12px;
+    border: 1px solid #0f3460;
+    text-align: left;
+}
+
+.portfolioTable th {
+    background-color: #16213e;
+}
+
+
+.portfolioTable tbody tr:nth-child(even) {
+    background-color: #1f4068;
+}
+
+.portfolioTable tbody tr:nth-child(odd) {
+    background-color: #16213e;
+    padding-left: 10px;
+}
+
+.position td {
+    font-size: 16px;
+}
+
+.portfolioTable td {
+    padding-left: 16px; /* Adjust the value as needed */
+}
+
+
+.symbol {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.positive {
+    color: #4caf50; /* green for positive change */
+}
+
+.negative {
+    color: #f44336; /* red for negative change */
+}
+
+.loading, .error {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.error {
+    color: red;
+}

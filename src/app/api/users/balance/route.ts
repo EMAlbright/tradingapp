@@ -10,8 +10,7 @@ connect();
 export async function GET(request: NextRequest){
     try{
         const userID = await getDataFromToken(request);
-        
-        const user = await User.findOne({_id:userID});
+        const user = await User.findOne({_id:userID}); 
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
           }

@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 50000,
     },
+    invested: {
+        type: Number,
+        default: 50000,
+    },
     tradePositions: {
         type: [{
             symbol: String,

@@ -50,7 +50,6 @@ export async function GET(request: NextRequest){
                 purchasePrice: purchasePrice,
                 currentPrice: currPrice,
                 percentageChange: percentageChange,
-                totalCost: totalCost,
                 currentValue: currValue
             };
         });

@@ -23,7 +23,7 @@ export default function Balance(){
         <div className="balance">
           <hr />
           {balance !== null ? (
-            <p>Your balance: ${balance}</p>
+            <p>Buying Power: ${balance}</p>
           ) : (
             <p>Loading balance...</p>
           )}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import "./portfolio.css";
 
 interface PortfolioPosition {
     symbol: string;
@@ -15,8 +16,19 @@ const Portfolio = () => {
     const [portfolio, setPortfolio] = useState<PortfolioPosition[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [username, setUsername] = useState<string | null>(null);
 
     useEffect(() => {
+        const fetchUsername = async () => {
+            try{
+                const response = await axios.get('/api/users/me');
+                setUsername(response.data.data.username);
+            } catch (error) {
+                setError('Failed to fetch portfolio data');
+            } finally {
+                setLoading(false);
+            }
+        }
         const fetchPortfolio = async () => {
             try {
                 const response = await axios.get('/api/users/portfolio');
@@ -27,7 +39,7 @@ const Portfolio = () => {
                 setLoading(false);
             }
         };
-
+        fetchUsername();
         fetchPortfolio();
     }, []);
 
@@ -40,19 +52,32 @@ const Portfolio = () => {
     }
 
     return (
-        <div>
-            <h2>User Portfolio</h2>
+        <div className='container'>
+            <h2 className='heading'>{username}'s Portfolio</h2>
+            <table className='portfolioTable'>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Quantity</th>
+                        <th>Purchase Price</th>
+                        <th>Current Price</th>
+                        <th>Current Value</th>
+                        <th>Percentage Change</th>
+                    </tr>
+                </thead>
+            <tbody>
             {portfolio.map((position, index) => (
-                <div key={index} >
-                    <p>Symbol: {position.symbol}</p>
-                    <p>Quantity: {position.quantity}</p>
-                    <p>Purchase Price: ${position.purchasePrice}</p>
-                    <p>Current Price: ${position.currentPrice}</p>
-                    <p>Total Cost: ${position.totalCost}</p>
-                    <p>Current Value: ${position.currentValue}</p>
-                    <p>Percentage Change: {position.percentageChange.toFixed(2)}%</p>
-                </div>
+                <tr key={index} >
+                    <td className='symbol'>{position.symbol}</td>
+                    <td className='quantity'>{position.quantity}</td>
+                    <td className='purchasePrice'>${position.purchasePrice}</td>
+                    <td className='currentPrice'>${position.currentPrice}</td>
+                    <td className='currentValue'>${position.currentValue}</td>
+                    <td className='percentageChange'>{position.percentageChange.toFixed(2)}%</td>
+                    </tr>
             ))}
+            </tbody>
+            </table>
         </div>
     );
 };

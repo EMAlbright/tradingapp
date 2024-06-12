@@ -3,7 +3,7 @@
     min-height: 100vh;
     display: flex;
   }
-  
+
   .topbarContainer {
     display: flex;
     flex-direction: column;
@@ -44,8 +44,13 @@
   }
   
   .tradingViewChart {
-    flex: 1;
+    background-color: #3333aa;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    height: 500px;
+    margin-bottom: 20px;
+    width: 1000px;
   }
   
   .Account {
@@ -64,4 +69,40 @@
     position: relative;
     top: 0;
     left: 0;
+  }
+  .contentContainer {
+    display: flex;
+    gap: 20px;
+  }
+
+  .indicators {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .portfolio {
+    background-color: #3333aa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 800px;
+    overflow-x: auto;
+  }
+
+  .fearGreed, .tenYear {
+    background-color: #3333aa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .loading, .error {
+    text-align: center;
+    font-size: 18px;
+    color: #eaeaea;
+  }
+  
+  .error {
+    color: red;
   }

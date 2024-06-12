@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import "./fearGreed.css";
+import "./tenYearYield.css";
 
 interface TenYearData {
       value: number,
@@ -18,15 +18,16 @@ const TenYearYield = () => {
       try {
         const response = await axios.get('/api/indicators/tenYearYield');
         setTenYear(response.data);
+        console.log(tenYear?.value);
       } catch (error) {
         setError('Failed to fetch Fear and Greed Index');
       } finally {
         setLoading(false);
       }
     };
-
+    //get every hour
     fetchTen();
-    const interval = setInterval(fetchTen, 60000); // Fetch every minute
+    const interval = setInterval(fetchTen, 3600000); 
 
     return () => clearInterval(interval); 
   }, []);
@@ -41,7 +42,7 @@ const TenYearYield = () => {
 
   return (
     <div className="yield-container">
-      <h2>Ten Year Yield</h2>
+      <h2 className='header'>Ten Year Yield</h2>
       <div className="fgi-value">
         <div>{tenYear?.value}</div>
         </div>

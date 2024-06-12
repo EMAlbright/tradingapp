@@ -10,6 +10,7 @@ import TradingViewWidget from '../tradingview/page';
 import FearGreedIndex from '../components/fearGreed';
 import TenYearYield from '../components/tenYearYield';
 import Portfolio from '../portfolio/page';
+import Invested from '../invested/page';
 
 export default function Home() {
 
@@ -65,17 +66,24 @@ export default function Home() {
         <Link href="/profile">Profile</Link>
       </div>
       <div className='balance'>
-        < Balance/>
+        <Balance />
+        <Invested />
       </div>
     </div>
   </div>
-  <div className="tradingViewChart" style={{ height: "500px" }}>
-     <TradingViewWidget />
-  </div>
-  <div className='userPortfolio'><Portfolio/></div>
+  <div className='contentContainer'>
+    <div className='mainContent'>
+      <div className="tradingViewChart">
+      <TradingViewWidget />
+      </div>
+      <div className='portfolio'>
+     <Portfolio/>
+      </div>
+    </div>
   <div className='indicators'>
-  <div className='fearGreed'><FearGreedIndex /></div>
-  <div className='tenYear'><TenYearYield /></div>
+      <div className='fearGreed'><FearGreedIndex /></div>
+      <div className='tenYear'><TenYearYield /></div>
+    </div>
   </div>
 </main>
   );

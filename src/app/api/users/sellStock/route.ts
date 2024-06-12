@@ -18,7 +18,7 @@ export async function POST(request: NextRequest){
     const stockData = await finnhubRes.json();
     const currPrice = stockData.c;
     const sellTotal = currPrice * quantity;
-    
+    //get all user positions
     const existingPosition: typeof user.tradePositions[0] | undefined = user.tradePositions.find(
         (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol
       );
