@@ -23,7 +23,7 @@ export async function POST(request: NextRequest){
     const existingPosition: typeof user.tradePositions[0] | undefined = user.tradePositions.find(
         (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol
       );
-    if(existingPosition){
+    if(existingPosition && existingPosition.price == currPrice){
         existingPosition.quantity += quantity;
     }
     else {

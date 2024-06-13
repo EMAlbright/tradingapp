@@ -36,6 +36,9 @@ export async function GET(request: NextRequest){
 
         const currPrices = tickerPrices.map(response => response.data.c);
         
+        let totalInitialInvestment = 0;
+        let totalCurrentValue = 0;
+
         const portfolio = positions.map((position: iTradePosition, index: number) =>{
             const currPrice = currPrices[index];
             const purchasePrice = position.price;
@@ -53,9 +56,7 @@ export async function GET(request: NextRequest){
                 currentValue: currValue
             };
         });
-        console.log(portfolio);
-        return NextResponse.json(portfolio);
-    
+        return NextResponse.json({portfolio});
     }
         catch (error: any) {
           return NextResponse.json({ error: error.message }, { status: 500 });

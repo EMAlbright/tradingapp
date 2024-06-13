@@ -9,3 +9,24 @@
     border-radius: 20px; 
     padding: -20px; 
 }
+
+.positive-arrow {
+    color: #4caf50;
+    margin-right: 2px;
+    padding-left: 5px;
+}
+
+.negative-arrow {
+    color: #f44336; 
+    margin-right: 2px;
+    padding-left: 5px;
+}
+
+.percent{
+    padding-left: 105px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}

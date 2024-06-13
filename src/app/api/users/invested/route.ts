@@ -39,21 +39,26 @@ export async function GET(request: NextRequest){
         );
 
         const currPrices = tickerPrices.map(response => response.data.c);
+        let totalInitialInvestment = 0;
+        let totalCurrentValue = 0;
         
         let total = 0;
         positions.forEach((position: iTradePosition, index: number) =>{
             const currPrice = currPrices[index];
+            const purchasePrice = position.price;
             const quantity = position.quantity;
-            const currentValue = currPrice * quantity
-            const originalValue = position.price * quantity;
-
-            total += currentValue - originalValue;
+            const totalCost = purchasePrice * quantity;
+            const currentValue = currPrice * quantity;
+            total += currentValue;
+            totalInitialInvestment += totalCost;
+            totalCurrentValue += currentValue;
         });
-
-        user.invested += total;
+        const overallPercentageChange = ((totalCurrentValue - totalInitialInvestment) / totalInitialInvestment) * 100;
+        const PL = totalCurrentValue - totalInitialInvestment;
+        user.invested = total;
         await user.save();
         
-        return NextResponse.json({invested: user.invested});
+        return NextResponse.json({invested: user.invested, overallPercentageChange, PL});
 
         } catch (error: any) {
           return NextResponse.json({ error: error.message }, { status: 500 });
