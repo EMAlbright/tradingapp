@@ -65,6 +65,9 @@ export default function Home() {
       <div className='Profile'>
         <Link href="/profile">Profile</Link>
       </div>
+      <div className='strategies'>
+        <Link href="/backtest">Strategies</Link>
+      </div>
       <div className='balance'>
         <Balance />
         <Invested />
