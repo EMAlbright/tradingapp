@@ -32,7 +32,7 @@ export default function Invested () {
         <div className="investment">
           <hr />
           {investment !== null ? (
-            <p>Invested: ${investment} {percentage > 0 ? (
+            <p>Invested: ${investment.toFixed(2)} {percentage > 0 ? (
               <span className="positive-arrow">▲</span>
           ) : (
               <span className="negative-arrow">▼</span>
