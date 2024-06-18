@@ -38,10 +38,10 @@ class BBStrategy(Strategy):
         self.upper, self.middle, self.lower = self.I(talib.BBANDS, price, timeperiod=20)
     
     def next(self):
-        if self.data.Close[-1] < self.lower[-1]:  # Price below lower band
+        if self.data.Close < self.lower[-1]:
             self.buy()
             # higher than sell
-        elif self.data.Close[-1] >= self.lower[-1]:
+        elif self.data.Close >= self.lower[-1]:
             self.sell()
 class MovingAverageStrategy(Strategy):
     def init(self):
@@ -56,6 +56,26 @@ class MovingAverageStrategy(Strategy):
             self.buy()
         elif crossover(self.ma2, self.ma1):
             self.sell()
+#fib still broken
+class fibonacciStrategy(Strategy):
+    def init(self):
+        price = self.data.Close
+        self.high = price.max()
+        self.low = price.min()
+        self.fibLevels = [
+            self.high,
+            self.high - .236 * (self.high - self.low),
+            self.high - .382 * (self.high - self.low),
+            self.high - .618 * (self.high - self.low),
+            self.low
+        ]
+    
+    def next(self):
+        price = self.data.Close[-1]
+        if price < self.fibLevels[3]:
+            self.buy()
+        elif price > self.fibLevels[1]:
+            self.sell()
 
 class MACDStrategy(Strategy):
     def init(self):
@@ -69,6 +89,45 @@ class MACDStrategy(Strategy):
             self.buy()
         elif crossover(0, self.macd_line):
             self.sell()
+
+class ElderRayIndexStrategy(Strategy):
+    def init(self):
+        high = self.data.High
+        low = self.data.Low
+        close = self.data.Close
+        self.bull_power = self.I(talib.EMA, high - talib.EMA(close, timeperiod=13), timeperiod=13)
+        self.bear_power = self.I(talib.EMA, low - talib.EMA(close, timeperiod=13), timeperiod=13)
+    
+    def next(self):
+        if self.bull_power[-1] > 0 and self.bear_power[-1] < 0:
+            self.buy()
+        elif self.bull_power[-1] < 0 and self.bear_power[-1] > 0:
+            self.sell()
+
+class WilliamsRStrategy(Strategy):
+    def init(self):
+        high = self.data.High
+        low = self.data.Low
+        close = self.data.Close
+        self.williams_r = self.I(talib.WILLR, high, low, close, timeperiod=14)
+    
+    def next(self):
+        if self.williams_r[-1] < -80:  # Oversold
+            self.buy()
+        elif self.williams_r[-1] > -20:  # Overbought
+            self.sell()
+
+class ChandeMomentumOscillatorStrategy(Strategy):
+    def init(self):
+        close = self.data.Close
+        self.cmo = self.I(talib.CMO, close, timeperiod=14)
+    
+    def next(self):
+        if self.cmo[-1] > 50:  # Overbought
+            self.sell()
+        elif self.cmo[-1] < -50:  # Oversold
+            self.buy()
+
 
 class CCIStrategy(Strategy):
     def init(self):
@@ -97,27 +156,25 @@ strategies = {
     "bollinger_band": BBStrategy,
     "macd": MACDStrategy,
     "cci": CCIStrategy,
-    "sar": sarStrategy
+    "sar": sarStrategy,
+    "sto": StochasticOscillatorStrategy,
+    "fib": fibonacciStrategy,
+    "wil": WilliamsRStrategy,
+    "cmo": ChandeMomentumOscillatorStrategy,
+    "elder": ElderRayIndexStrategy,
 }
 
-start = dt.datetime(2023,4,13)
-end = dt.datetime(2024,5,13)
-data = web.DataReader("TSLA", "stooq", start, end)
-backtestSMA = Backtest(data, MovingAverageStrategy, commission=.002, exclusive_orders=True)
-backtestRSI = Backtest(data, RSI_Strategy, commission=.002, exclusive_orders=True)
-backtestBB = Backtest(data, BBStrategy, commission=.002, exclusive_orders=True)
-backtestMACD = Backtest(data, MACDStrategy, commission=.002, exclusive_orders=True)
-backtestCCI = Backtest(data, CCIStrategy, commission=.002, exclusive_orders=True)
-backtestSAR = Backtest(data, sarStrategy, commission=.002, exclusive_orders=True)
-backtestSO = Backtest(data, StochasticOscillatorStrategy, commission=.002, exclusive_orders=True)
-statsSMA = backtestSMA.run()
-statsRSI = backtestRSI.run()
-statsBB = backtestBB.run()
-statsMACD = backtestMACD.run()
-statsCCI = backtestCCI.run()
-statsSAR = backtestSAR.run()
-statsSO = backtestSO.run()
-
+data= web.DataReader("AAPL", "stooq", "2024-03-07", "2024-06-14")
+statsFIB = Backtest(data, fibonacciStrategy, commission=.002, exclusive_orders=True)
+statsRSI = Backtest(data, RSI_Strategy, commission=.002, exclusive_orders=True)
+statsElder = Backtest(data, ElderRayIndexStrategy, commission=.002, exclusive_orders=True)
+run = statsFIB.run()
+run2 = statsRSI.run()
+run3 = statsElder.run()
+#statsElder.plot()
+print(run)
+print(run2)
+print(run3)
 #backtest.plot()
 
 @app.route("/api/strategies")

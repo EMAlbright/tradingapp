@@ -78,7 +78,11 @@ export default function Backtest() {
             <option value="macd">MACD</option>
             <option value="cci">CCI</option>
             <option value="sar">SAR</option>
-            <option value="stochastic_oscillator">Stochastic Oscillator</option>
+            <option value="sto">Stochastic Oscillator</option>
+            <option value="fib">Fibonacci Retracement</option>
+            <option value = "wil">Williams %R Strategy</option>
+            <option value = "cmo">Chande Momentum Oscillator</option>
+            <option value = "elder">Elder Ray Index</option>
           </select>
           <input
             type="text"
