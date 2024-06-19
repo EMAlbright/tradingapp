@@ -4,10 +4,15 @@ from backtesting.test import SMA, GOOG
 import pandas_datareader as web
 import datetime as dt
 import json
+from bokeh.io import export_png
+import plotly.graph_objs as go
+from bokeh.plotting import figure, output_notebook, show
 import matplotlib.pyplot as plt
 from typing import List
 import talib
-from flask import Flask, jsonify, request
+from io import BytesIO
+
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
@@ -164,18 +169,11 @@ strategies = {
     "elder": ElderRayIndexStrategy,
 }
 
-data= web.DataReader("AAPL", "stooq", "2024-03-07", "2024-06-14")
-statsFIB = Backtest(data, fibonacciStrategy, commission=.002, exclusive_orders=True)
-statsRSI = Backtest(data, RSI_Strategy, commission=.002, exclusive_orders=True)
-statsElder = Backtest(data, ElderRayIndexStrategy, commission=.002, exclusive_orders=True)
-run = statsFIB.run()
-run2 = statsRSI.run()
-run3 = statsElder.run()
-#statsElder.plot()
-print(run)
-print(run2)
-print(run3)
-#backtest.plot()
+data= web.DataReader("MSFT", "stooq","04-10-2024", "06-13-2024")
+backtestData = Backtest(data, BBStrategy, commission=.002, exclusive_orders=True)
+backtestData.run()
+print(backtestData._results)
+#backtestData.plot()
 
 @app.route("/api/strategies")
 def return_strategies():
@@ -209,9 +207,41 @@ def return_strategies():
         "WinRate": stats_dict["Win Rate [%]"],
         "WorstTrade": stats_dict["Worst Trade [%]"],
         "AvgTrade": stats_dict["Avg. Trade [%]"],
-        "PF": stats_dict["Profit Factor"]
     }
     return jsonify(result)
+
+@app.route("/api/plot")
+def return_plot():
+    strategyName = request.args.get("strategy")
+    start = request.args.get("start")
+    end = request.args.get("end")
+    stock = request.args.get("stock")
+
+    if not all([strategyName, start, end, stock]):
+        return jsonify({"Error, Missing Parameter"})
+    
+    strategy_class = strategies.get(strategyName)
+    if not strategy_class:
+        return jsonify({"Not a valid strategy"})
+    
+    start_date = dt.datetime.strptime(start, '%Y-%m-%d')
+    end_date = dt.datetime.strptime(end, '%Y-%m-%d')
+
+    data= web.DataReader(stock, "stooq", start_date, end_date)
+    backtestData = Backtest(data, strategy_class, commission=.002, exclusive_orders=True)
+    backtestData.run()
+    
+    fig =backtestData.plot(open_browser=False)
+    #output_notebook()
+    #show(fig, notebook_handle=False)
+    #html = fig.to_html(fig, full_html=False, include_plotlyjs=False)
+    img = BytesIO()
+    export_png(fig, filename=img)
+    img.seek(0)
+
+    return send_file(img, mimetype='image/png')
+    # Convert the plot to a PNG image in memory
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

@@ -7,7 +7,6 @@ interface BacktestResult {
   AvgTrade: number;
   BestTrade: number;
   NumTrades: number;
-  PF: number;
   TotalReturn: number;
   HoldReturn: number;
   WinRate: number;
@@ -21,6 +20,7 @@ export default function Backtest() {
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [loading, setLoading] = useState(false);
+  const [plotUrl, setPlotUrl] = useState<string | null>(null);
   const router = useRouter();
 
   const fetchData = () => {
@@ -38,6 +38,20 @@ export default function Backtest() {
     });
   };
 
+  const fetchPlot = () => {
+    axios.get('http://localhost:8080/api/plot', {
+      params: {strategy, stock, start, end},
+      responseType: 'blob'
+    })
+    .then(response => {
+      setPlotUrl(response.data.html);
+    })
+    .catch(error => {
+      console.error('Error fetching plot:', error);
+      setLoading(false);
+    });
+  }
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     fetchData();
@@ -48,7 +62,6 @@ export default function Backtest() {
       typeof data.AvgTrade === 'number' &&
       typeof data.BestTrade === 'number' &&
       typeof data.NumTrades === 'number' &&
-      typeof data.PF === 'number' &&
       typeof data.TotalReturn === 'number' &&
       typeof data.HoldReturn === 'number' &&
       typeof data.WinRate === 'number' &&
@@ -123,7 +136,12 @@ export default function Backtest() {
               <div>Win Rate: {data.WinRate.toFixed(2)}%</div>
               <div>Best Trade: {data.BestTrade.toFixed(2)}%</div>
               <div>Worst Trade: {data.WorstTrade.toFixed(2)}%</div>
-              <div>Profit Factor: {data.PF.toFixed(2)}</div>
+              <button onClick={fetchPlot} className="mt-4 p-2 bg-green-600 hover:bg-green-700 rounded-lg">
+              Show Plot
+              </button>
+              {plotUrl && (
+         <img src={plotUrl} alt="Bokeh Plot" />
+        )}
             </div>
           </div>
         )}
