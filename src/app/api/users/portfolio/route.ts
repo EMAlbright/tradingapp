@@ -53,7 +53,8 @@ export async function GET(request: NextRequest){
                 purchasePrice: purchasePrice,
                 currentPrice: currPrice,
                 percentageChange: percentageChange,
-                currentValue: currValue
+                currentValue: currValue,
+                totalCost: totalCost
             };
         });
         return NextResponse.json({portfolio});

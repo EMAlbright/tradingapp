@@ -3,11 +3,9 @@ from backtesting.lib import crossover
 from backtesting.test import SMA, GOOG
 import pandas_datareader as web
 import datetime as dt
+import numpy as np
 import json
 from bokeh.io import export_png
-import plotly.graph_objs as go
-from bokeh.plotting import figure, output_notebook, show
-import matplotlib.pyplot as plt
 from typing import List
 import talib
 from io import BytesIO
@@ -82,6 +80,21 @@ class fibonacciStrategy(Strategy):
         elif price > self.fibLevels[1]:
             self.sell()
 
+#rsi and macd
+class BBRMACDStrategy(Strategy):
+    def init(self):
+        price = self.data.Close
+        # Calculate MACD
+        macd, signal, _ = self.I(talib.MACD, price, fastperiod=12, slowperiod=26, signalperiod=9)
+        self.macd_line = macd - signal
+        # Calculate RSI
+        self.rsi = self.I(talib.RSI, price, timeperiod=14)
+    
+    def next(self):
+        if (crossover(self.macd_line, 0)) and (self.rsi[-1] < 30):
+            self.buy()
+        elif (crossover(0, self.macd_line) and (self.rsi[-1] > 70)):
+            self.sell()
 class MACDStrategy(Strategy):
     def init(self):
         price = self.data.Close
@@ -133,6 +146,20 @@ class ChandeMomentumOscillatorStrategy(Strategy):
         elif self.cmo[-1] < -50:  # Oversold
             self.buy()
 
+class CMFStrategy(Strategy):
+    def init(self):
+        high = np.array(self.data.High, dtype=np.float64)
+        low = np.array(self.data.Low, dtype=np.float64)
+        close = np.array(self.data.Close, dtype=np.float64)
+        volume = np.array(self.data.Volume, dtype=np.float64)
+        self.cmf = self.I(talib.ADOSC, high, low, close, volume, fastperiod=3, slowperiod=10)
+    
+    def next(self):
+        if self.cmf[-1] > 0:
+            self.buy()
+        elif self.cmf[-1] < 0:
+            self.sell()
+
 
 class CCIStrategy(Strategy):
     def init(self):
@@ -167,13 +194,12 @@ strategies = {
     "wil": WilliamsRStrategy,
     "cmo": ChandeMomentumOscillatorStrategy,
     "elder": ElderRayIndexStrategy,
+    "cmf": CMFStrategy
 }
 
-data= web.DataReader("MSFT", "stooq","04-10-2024", "06-13-2024")
-backtestData = Backtest(data, BBStrategy, commission=.002, exclusive_orders=True)
-backtestData.run()
-print(backtestData._results)
-#backtestData.plot()
+#data= web.DataReader("spy", "stooq","05-29-2018", "06-19-2024")
+#backtestData = Backtest(data, BBRMACDStrategy, commission=.002, exclusive_orders=True)
+#print(backtestData.run())
 
 @app.route("/api/strategies")
 def return_strategies():
@@ -235,6 +261,7 @@ def return_plot():
     #output_notebook()
     #show(fig, notebook_handle=False)
     #html = fig.to_html(fig, full_html=False, include_plotlyjs=False)
+    fig = backtestData.plot(open_browser=False)
     img = BytesIO()
     export_png(fig, filename=img)
     img.seek(0)

@@ -4,14 +4,13 @@ import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import Balance from '../userBalance/page';
-import axios from 'axios';
-import toast from 'react-hot-toast';
 import TradingViewWidget from '../tradingview/page';
 import FearGreedIndex from '../components/fearGreed';
 import TenYearYield from '../components/tenYearYield';
 import Portfolio from '../portfolio/page';
 import Invested from '../invested/page';
-
+import Gold from '../components/gold';
+import Silver from '../components/silver';
 export default function Home() {
 
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -86,6 +85,10 @@ export default function Home() {
   <div className='indicators'>
       <div className='fearGreed'><FearGreedIndex /></div>
       <div className='tenYear'><TenYearYield /></div>
+    </div>
+    <div className='comm'>
+      <div className='silver'><Silver /></div>
+      <div className='gold'><Gold /></div>
     </div>
   </div>
 </main>

@@ -24,7 +24,7 @@ export default function Invested () {
         }
         fetchInvestment();
 
-        const interval = setInterval(fetchInvestment, 600000);
+        const interval = setInterval(fetchInvestment, 1200000);
         return () => clearInterval(interval);
     }, []);
 

@@ -48,6 +48,8 @@ const Portfolio = () => {
 
         fetchUsername();
         fetchPortfolio();
+        const interval = setInterval(fetchPortfolio, 1200000); 
+        return () => clearInterval(interval);
     }, []);
 
     if (loading) {
@@ -70,6 +72,7 @@ const Portfolio = () => {
                         <th>Current Price</th>
                         <th>Current Value</th>
                         <th>Percentage Change</th>
+                        <th>Dollar Value</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,6 +86,8 @@ const Portfolio = () => {
                             <td className={`percentageChange ${position.percentageChange > 0 ? 'positive' : 'negative'}`}>
                                 {position.percentageChange.toFixed(2)}%
                             </td>
+                            <td className={`dollarValue ${position.currentValue - position.totalCost > 0 ? 'positive' : 'negative'}`}>
+                                {(position.currentValue - position.totalCost).toFixed(2)}</td>
                         </tr>
                     ))}
                 </tbody>

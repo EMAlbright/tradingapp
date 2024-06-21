@@ -44,7 +44,8 @@ export default function Backtest() {
       responseType: 'blob'
     })
     .then(response => {
-      setPlotUrl(response.data.html);
+      const url = URL.createObjectURL(response.data);
+      setPlotUrl(url);
     })
     .catch(error => {
       console.error('Error fetching plot:', error);
@@ -96,6 +97,7 @@ export default function Backtest() {
             <option value = "wil">Williams %R Strategy</option>
             <option value = "cmo">Chande Momentum Oscillator</option>
             <option value = "elder">Elder Ray Index</option>
+            <option value= "cmf">Chaikin Money Flow Strategy</option>
           </select>
           <input
             type="text"
