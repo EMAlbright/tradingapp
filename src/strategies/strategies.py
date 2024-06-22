@@ -197,7 +197,7 @@ strategies = {
     "cmf": CMFStrategy
 }
 
-#data= web.DataReader("spy", "stooq","05-29-2018", "06-19-2024")
+#data= web.DataReader("MSFT", "stooq","02-14-2024", "06-13-2024")
 #backtestData = Backtest(data, BBRMACDStrategy, commission=.002, exclusive_orders=True)
 #print(backtestData.run())
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from "next/navigation";
 import "./backtest.css";
-import {RSI} from "../components/indicatorsFE/indicatorSide";
+import {MovingSMA, RSI, BB, MACD, CCI, SAR, STO, FIB, WIL, CMO, ELDER, CMF} from "../components/indicatorsFE/indicatorSide";
 interface BacktestResult {
   AvgTrade: number;
   BestTrade: number;
@@ -155,11 +155,22 @@ export default function Backtest() {
           </div>
         )}
     </div>
-    <div className='indicatorDetails' style={{
-        position: 'absolute', left: '250px', top: '50%', 
-        transform: 'translateY(-50%)', width: '200px', }}>
-        {hover === "rsi"&& <RSI />}
-    </div>
+      <div className="indicator-container" style={{ display: 'flex', alignItems: 'left', position: 'fixed',left: '125px' }}>
+        <div className='indicatorDetails' style={{ marginTop: '-250px', width: '500px', position: 'absolute' }}>
+            {hover === "moving_sma" && <MovingSMA/>}
+            {hover === "rsi" &&<RSI />}
+            {hover === "bollinger_band" &&<BB />}
+            {hover === "macd" &&<MACD />}
+            {hover === "cci" &&<CCI />}
+            {hover === "sar" &&<SAR />}
+            {hover === "sto" &&<STO />}
+            {hover === "fib" &&<FIB />}
+            {hover === "wil" &&<WIL />}
+            {hover === "cmo" &&<CMO />}
+            {hover === "cmf" &&<CMF />}
+            {hover === "elder" &&<ELDER />}
+        </div>
+      </div>
     </div>
   );
 }
