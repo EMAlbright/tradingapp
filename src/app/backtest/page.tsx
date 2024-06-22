@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from "next/navigation";
 import "./backtest.css";
+import {RSI} from "../components/indicatorsFE/indicatorSide";
 interface BacktestResult {
   AvgTrade: number;
   BestTrade: number;
@@ -21,6 +22,7 @@ export default function Backtest() {
   const [end, setEnd] = useState('');
   const [loading, setLoading] = useState(false);
   const [plotUrl, setPlotUrl] = useState<string | null>(null);
+  const [hover, setHover] = useState<string | null>(null);
   const router = useRouter();
 
   const fetchData = () => {
@@ -69,6 +71,10 @@ export default function Backtest() {
       typeof data.WorstTrade === 'number';
   };
 
+  const handleHover = (event: React.MouseEvent<HTMLSelectElement>) => {
+    setHover((event.target as HTMLSelectElement).value);
+  };
+
   const onHome = async() =>{
     router.push("/home");
   }
@@ -82,6 +88,7 @@ export default function Backtest() {
         <h1 className="text-2xl font-bold text-center">Backtest</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <select
+            onMouseOver={handleHover}
             value={strategy}
             onChange={(e) => setStrategy(e.target.value)}
             className="w-full p-2 border border-gray-600 rounded-lg bg-gray-800 placeholder-gray-400 text-white"
@@ -147,6 +154,11 @@ export default function Backtest() {
             </div>
           </div>
         )}
+    </div>
+    <div className='indicatorDetails' style={{
+        position: 'absolute', left: '250px', top: '50%', 
+        transform: 'translateY(-50%)', width: '200px', }}>
+        {hover === "rsi"&& <RSI />}
     </div>
     </div>
   );
