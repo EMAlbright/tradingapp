@@ -41,14 +41,12 @@ export default function Home() {
       <h1>Satire Trade</h1>
     </section>
     <div className="Options">
+    <div className='Profile'>
+        <Link href="/profile">Profile</Link>
+      </div>
       <div className="Assets">
         <Link href="/assets" className="Assets">
           Assets
-        </Link>
-      </div>
-      <div className="Portfolio">
-        <Link href="/Portfolio" className="Portfolio">
-          Portfolio
         </Link>
       </div>
       <div className="Trade">
@@ -56,16 +54,13 @@ export default function Home() {
           Trade
         </Link>
       </div>
-      <div className="Learn">
-        <Link href="/Learn" className="Learn">
-          Learn
-        </Link>
-      </div>
-      <div className='Profile'>
-        <Link href="/profile">Profile</Link>
-      </div>
       <div className='strategies'>
         <Link href="/backtest">Strategies</Link>
+      </div>
+      <div className="Learn">
+        <Link href="/whales" className="Learn">
+          Whale Tracker
+        </Link>
       </div>
       <div className='balance'>
         <Balance />
