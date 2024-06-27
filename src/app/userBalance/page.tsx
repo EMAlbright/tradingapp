@@ -23,7 +23,7 @@ export default function Balance(){
         <div className="balance">
           <hr />
           {balance !== null ? (
-            <p>Buying Power: ${balance}</p>
+            <p>Buying Power: ${balance.toFixed(2)}</p>
           ) : (
             <p>Loading balance...</p>
           )}

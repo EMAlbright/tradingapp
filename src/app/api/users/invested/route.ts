@@ -28,34 +28,63 @@ export async function GET(request: NextRequest){
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
-        const key = process.env.NEXT_PUBLIC_FINNHUB_API;
-
         const positions = user.tradePositions || [];
+        const key = process.env.NEXT_PUBLIC_FINNHUB_API;
+        const tickerHoldings = positions.map((position: iTradePosition) => position.symbol);
         // Fetch current prices for all symbols
         const tickerPrices = await Promise.all(
-            positions.map((position: iTradePosition) => 
-                axios.get(`https://finnhub.io/api/v1/quote?symbol=${position.symbol}&token=${key}`)
-            )
+            tickerHoldings.map(async (symbol: string) => {
+                try {
+                    //cryptos
+                    const response = await axios.get(`https://api.coincap.io/v2/assets/${symbol}`);
+                    return { symbol, priceUsd: parseFloat(response.data.data.priceUsd) };
+                } catch (cryptoError) {
+                    console.error(`${symbol}: ${cryptoError}`);
+                    try {
+                        //stonks
+                        const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${key}`);
+                        return { symbol, priceUsd: response.data.c };
+                    } catch (stockError) {
+                        console.error(`${symbol}: ${stockError}`);
+                        return { symbol, priceUsd: null }; 
+                    }
+                }
+            })
         );
 
-        const currPrices = tickerPrices.map(response => response.data.c);
         let totalInitialInvestment = 0;
         let totalCurrentValue = 0;
         
         let total = 0;
-        positions.forEach((position: iTradePosition, index: number) =>{
-            const currPrice = currPrices[index];
-            const purchasePrice = position.price;
-            const quantity = position.quantity;
-            const totalCost = purchasePrice * quantity;
-            const currentValue = currPrice * quantity;
-            total += currentValue;
-            totalInitialInvestment += totalCost;
-            totalCurrentValue += currentValue;
+        const portfolio = positions.map((position: iTradePosition, index: number) => {
+            const currPriceObj = tickerPrices.find(price => price.symbol === position.symbol);
+            if (currPriceObj && currPriceObj.priceUsd !== null) {
+                const currPrice = currPriceObj.priceUsd;
+                const purchasePrice = position.price;
+                const quantity = position.quantity;
+                const totalCost = purchasePrice * quantity;
+                const currValue = currPrice * quantity;
+                const percentageChange = ((currValue - totalCost) / totalCost) * 100;
+
+                totalInitialInvestment += totalCost;
+                totalCurrentValue += currValue;
+
+                return {
+                    symbol: position.symbol,
+                    quantity: quantity,
+                    totalCurrentValue: totalCurrentValue,
+                    totalInitialInvestment: totalInitialInvestment,
+                    purchasePrice: purchasePrice,
+                    currentPrice: currPrice,
+                    percentageChange: percentageChange,
+                    currentValue: currValue,
+                    totalCost: totalCost,
+                };
+            } 
         });
         const overallPercentageChange = ((totalCurrentValue - totalInitialInvestment) / totalInitialInvestment) * 100;
         const PL = totalCurrentValue - totalInitialInvestment;
-        user.invested = total;
+        user.invested = totalCurrentValue;
         await user.save();
         
         return NextResponse.json({invested: user.invested, overallPercentageChange, PL});
