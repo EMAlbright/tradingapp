@@ -4,36 +4,34 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import BuyCryptoPage from "../buyCrypto/page";
 
-export default function BuyStockPage() {
+export default function BuyCryptoPage() {
     const [symbol, setSymbol] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const fetchStockPrice = async () => {
+    const fetchCryptoPrice = async () => {
         try {  
             setLoading(true);
-            const key = process.env.NEXT_PUBLIC_FINNHUB_API;
             //fix key later
-            const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${key}`);
+            const response = await fetch(`https://api.coincap.io/v2/assets/${symbol}`);
             const data = await response.json();
-            setPrice(data.c);
+            setPrice(parseFloat(parseFloat(data.data.priceUsd).toFixed(2)));
         } catch (error) {
-            console.error("Failed to fetch stock price", error);
-            toast.error("Failed to fetch stock price");
+            console.error("Failed to fetch crypto price", error);
+            toast.error("Failed to fetch crypto price");
         } finally {
             setLoading(false);
         }
     };
 
-    const onBuyStock = async () => {
+    const onBuyCrypto = async () => {
         try {
             setLoading(true);
-            await axios.post("/api/users/buyStock", { symbol, quantity, price });
-            toast.success("Stock purchased!");
+            await axios.post("/api/users/buyCrypto", { symbol, quantity, price });
+            toast.success("Crypto purchased!");
             router.push("/home");
         } catch (error: any) {
             toast.error(error.response?.data?.error || "Stock purchase failed");
@@ -42,11 +40,11 @@ export default function BuyStockPage() {
         }
     };
 
-    const onSellStock = async () => {
+    const onSellCrypto = async () => {
         try {
             setLoading(true);
-            await axios.post("/api/users/sellStock", { symbol, quantity });
-            toast.success("Stock sold!");
+            await axios.post("/api/users/sellCrypto", { symbol, quantity });
+            toast.success("Crypto sold!");
             router.push("/home");
         } catch (error: any) {
             toast.error(error.response?.data?.error || "Stock sale failed");
@@ -62,12 +60,12 @@ export default function BuyStockPage() {
                 <input
                     className="w-full p-2 border border-gray-600 rounded-lg bg-gray-800 placeholder-gray-400 text-white"
                     type="text"
-                    placeholder="Enter a ticker"
+                    placeholder="Enter a cryptocurrency (full name)"
                     value={symbol}
                     onChange={(e) => setSymbol(e.target.value)}
                 />
                 <button
-                    onClick={fetchStockPrice}
+                    onClick={fetchCryptoPrice}
                     className="w-full p-2 bg-blue-600 hover:bg-blue-700 rounded-lg"
                     disabled={loading}
                 >
@@ -87,21 +85,20 @@ export default function BuyStockPage() {
                     onChange={(e) => setQuantity(Number(e.target.value))}
                 />
                 <button
-                    onClick={onBuyStock}
+                    onClick={onBuyCrypto}
                     className="w-full p-2 bg-green-600 hover:bg-green-700 rounded-lg"
                     disabled={loading}
                 >
-                    Buy Stock
+                    Buy Crypto
                 </button>
                 <button
-                    onClick={onSellStock}
+                    onClick={onSellCrypto}
                     className="w-full p-2 bg-red-600 hover:bg-red-700 rounded-lg"
                     disabled={loading}
                 >
-                    Sell Stock
+                    Sell Crypto
                 </button>
             </div>
-            <BuyCryptoPage/>
         </div>
     );
 }

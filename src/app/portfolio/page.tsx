@@ -59,6 +59,7 @@ const Portfolio = () => {
     if (error) {
         return <div>{error}</div>;
     }
+    const filteredPortfolio = portfolioData?.portfolio.filter(position => position.quantity !== 0);
 
     return (
         <div className='container'>
@@ -76,7 +77,7 @@ const Portfolio = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {portfolioData?.portfolio.map((position, index) => (
+                    {filteredPortfolio?.map((position, index) => (
                         <tr key={index} >
                             <td className='symbol'>{position.symbol}</td>
                             <td className='quantity'>{position.quantity}</td>
@@ -84,7 +85,7 @@ const Portfolio = () => {
                             <td className='currentPrice'>${position.currentPrice.toFixed(2)}</td>
                             <td className='currentValue'>${position.currentValue.toFixed(2)}</td>
                             <td className={`percentageChange ${position.percentageChange > 0 ? 'positive' : 'negative'}`}>
-                                {position.percentageChange.toFixed(2)}%
+                                {position.percentageChange !== null ? position.percentageChange.toFixed(2) : ''}%
                             </td>
                             <td className={`dollarValue ${position.currentValue - position.totalCost > 0 ? 'positive' : 'negative'}`}>
                                 {(position.currentValue - position.totalCost).toFixed(2)}</td>
@@ -94,6 +95,7 @@ const Portfolio = () => {
             </table>
         </div>
     );
+
 };
 
 export default Portfolio;

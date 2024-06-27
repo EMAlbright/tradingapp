@@ -12,22 +12,24 @@ export default function Invested () {
     useEffect(() => {
         const fetchInvestment = async () => {
             try {
-                const response = await axios.get("/api/users/invested")
+                const response = await axios.get("/api/users/invested");
                 setInvestment(response.data.invested);
                 setPercentage(response.data.overallPercentageChange);
                 setPL(response.data.PL);
+                console.log(response.data.invested);
             } catch(error){
                 setError("error getting investment")
             } finally{
                 setLoading(true);
             }
-        }
+        } 
         fetchInvestment();
 
         const interval = setInterval(fetchInvestment, 1200000);
         return () => clearInterval(interval);
     }, []);
-
+    console.log(`Stocks: ${investment}`)
+    console.log(`Stocks PL: ${PL}`)
     return (
         <div className="investment">
           <hr />
