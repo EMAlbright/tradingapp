@@ -5,7 +5,7 @@ import pandas_datareader as web
 import datetime as dt
 import numpy as np
 import json
-from bokeh.io import export_png
+from bokeh.io.export import get_screenshot_as_png
 from typing import List
 import talib
 from io import BytesIO
@@ -198,8 +198,9 @@ strategies = {
 }
 
 #data= web.DataReader("MSFT", "stooq","02-14-2024", "06-13-2024")
-#backtestData = Backtest(data, BBRMACDStrategy, commission=.002, exclusive_orders=True)
-#print(backtestData.run())
+#backtestData = Backtest(data, ElderRayIndexStrategy, commission=.002, exclusive_orders=True)
+#backtestData.run()
+#plot = backtestData.plot()
 
 @app.route("/api/strategies")
 def return_strategies():
@@ -257,13 +258,10 @@ def return_plot():
     backtestData = Backtest(data, strategy_class, commission=.002, exclusive_orders=True)
     backtestData.run()
     
-    fig =backtestData.plot(open_browser=False)
-    #output_notebook()
-    #show(fig, notebook_handle=False)
-    #html = fig.to_html(fig, full_html=False, include_plotlyjs=False)
+
     fig = backtestData.plot(open_browser=False)
     img = BytesIO()
-    export_png(fig, filename=img)
+    get_screenshot_as_png(fig).save(img, format='PNG')
     img.seek(0)
 
     return send_file(img, mimetype='image/png')

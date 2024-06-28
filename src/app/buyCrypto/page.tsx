@@ -54,7 +54,6 @@ export default function BuyCryptoPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4">
             <div className="w-full max-w-md p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold text-center">Satire Trade</h1>
                 <input
@@ -99,6 +98,5 @@ export default function BuyCryptoPage() {
                     Sell Crypto
                 </button>
             </div>
-        </div>
     );
 }

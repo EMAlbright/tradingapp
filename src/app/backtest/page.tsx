@@ -148,11 +148,13 @@ export default function Backtest() {
               <button onClick={fetchPlot} className="mt-4 p-2 bg-green-600 hover:bg-green-700 rounded-lg">
               Show Plot
               </button>
-              {plotUrl && (
-         <img src={plotUrl} alt="Bokeh Plot" />
-        )}
             </div>
           </div>
+        )}
+    </div>
+    <div className='backtestGraph'>
+    {plotUrl && (
+         <img src={plotUrl} alt="Bokeh Plot" />
         )}
     </div>
       <div className="indicator-container" style={{ display: 'flex', alignItems: 'left', position: 'fixed',left: '125px' }}>

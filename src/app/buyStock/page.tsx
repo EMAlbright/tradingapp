@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import BuyCryptoPage from "../buyCrypto/page";
 
 export default function BuyStockPage() {
     const [symbol, setSymbol] = useState("");
@@ -101,7 +100,6 @@ export default function BuyStockPage() {
                     Sell Stock
                 </button>
             </div>
-            <BuyCryptoPage/>
         </div>
     );
 }
