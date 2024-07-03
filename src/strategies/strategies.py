@@ -4,13 +4,14 @@ from backtesting.test import SMA, GOOG
 import pandas_datareader as web
 import datetime as dt
 import numpy as np
+from bokeh.embed import components
 import json
 from bokeh.io.export import get_screenshot_as_png
 from typing import List
 import talib
 from io import BytesIO
 
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, render_template_string
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)

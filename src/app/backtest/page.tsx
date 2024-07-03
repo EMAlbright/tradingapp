@@ -16,6 +16,7 @@ interface BacktestResult {
 
 export default function Backtest() {
   const [data, setData] = useState<BacktestResult | null>(null);
+  const [plotHtml, setPlotHtml] = useState<string>('');
   const [strategy, setStrategy] = useState('');
   const [stock, setStock] = useState('');
   const [start, setStart] = useState('');
@@ -46,8 +47,9 @@ export default function Backtest() {
       responseType: 'blob'
     })
     .then(response => {
-      const url = URL.createObjectURL(response.data);
-      setPlotUrl(url);
+    const url = URL.createObjectURL(response.data);
+    setPlotUrl(url);
+    setLoading(false);
     })
     .catch(error => {
       console.error('Error fetching plot:', error);
@@ -154,11 +156,11 @@ export default function Backtest() {
     </div>
     <div className='backTestGraph'>
     {plotUrl && (
-         <img src={plotUrl} alt="Bokeh Plot" className="w-full h-full" />
-        )}
+      <img src={plotUrl} />
+            )} 
     </div>
     <div className="relative mt-4 md:mt-0">
-    <div className="w-full md:w-95 rounded-lg p-4">
+    <div className="w-full md:w-96 rounded-lg p-4">
             {hover === "moving_sma" && <MovingSMA/>}
             {hover === "rsi" &&<RSI />}
             {hover === "bollinger_band" &&<BB />}
