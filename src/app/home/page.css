@@ -1,3 +1,8 @@
+html, body {
+  background-color: #2b547c;
+  margin: 0;
+  height: 100%;
+}
 .mainContainer {
     background-color: #2b547c;
     min-height: 100vh;

@@ -80,7 +80,7 @@ export default function Backtest() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4">
+    <div className="min-h-screen flex flex-col md:space-x-4 md:flex-row items-center justify-center bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4">
       <button className="homeButton" onClick={onHome}>
         <i className="animation">
       </i>Home<i className="animation"></i></button>
@@ -152,13 +152,13 @@ export default function Backtest() {
           </div>
         )}
     </div>
-    <div className='backtestGraph'>
+    <div className='backTestGraph'>
     {plotUrl && (
-         <img src={plotUrl} alt="Bokeh Plot" />
+         <img src={plotUrl} alt="Bokeh Plot" className="w-full h-full" />
         )}
     </div>
-      <div className="indicator-container" style={{ display: 'flex', alignItems: 'left', position: 'fixed',left: '125px' }}>
-        <div className='indicatorDetails' style={{ marginTop: '-250px', width: '500px', position: 'absolute' }}>
+    <div className="relative mt-4 md:mt-0">
+    <div className="w-full md:w-95 rounded-lg p-4">
             {hover === "moving_sma" && <MovingSMA/>}
             {hover === "rsi" &&<RSI />}
             {hover === "bollinger_band" &&<BB />}
