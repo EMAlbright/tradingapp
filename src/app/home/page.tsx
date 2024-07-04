@@ -11,6 +11,8 @@ import Portfolio from '../portfolio/page';
 import Invested from '../invested/page';
 import Gold from '../components/gold';
 import Silver from '../components/silver';
+import NewsWheel from '../news/page';
+
 export default function Home() {
 
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -69,23 +71,26 @@ export default function Home() {
     </div>
   </div>
   <div className='contentContainer'>
-    <div className='mainContent'>
-      <div className="tradingViewChart">
-      <TradingViewWidget />
+        <div className='mainContent'>
+          <div className="tradingViewChart">
+            <TradingViewWidget />
+          </div>
+          <div className='portfolio'>
+            <Portfolio/>
+          </div>
+          <div className='newsContainer'>
+          < NewsWheel />
+        </div>
+        </div>
+        <div className='indicators'>
+          <div className='fearGreed'><FearGreedIndex /></div>
+          <div className='tenYear'><TenYearYield /></div>
+        </div>
+        <div className='comm'>
+          <div className='silver'><Silver /></div>
+          <div className='gold'><Gold /></div>
+        </div>
       </div>
-      <div className='portfolio'>
-     <Portfolio/>
-      </div>
-    </div>
-  <div className='indicators'>
-      <div className='fearGreed'><FearGreedIndex /></div>
-      <div className='tenYear'><TenYearYield /></div>
-    </div>
-    <div className='comm'>
-      <div className='silver'><Silver /></div>
-      <div className='gold'><Gold /></div>
-    </div>
-  </div>
 </main>
   );
 }
