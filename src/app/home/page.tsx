@@ -12,6 +12,8 @@ import Invested from '../invested/page';
 import Gold from '../components/gold';
 import Silver from '../components/silver';
 import NewsWheel from '../news/page';
+import ETH from '../components/eth';
+import BTC from '../components/btc';
 
 export default function Home() {
 
@@ -89,6 +91,8 @@ export default function Home() {
         <div className='comm'>
           <div className='silver'><Silver /></div>
           <div className='gold'><Gold /></div>
+          <div className='btc'><BTC /></div>
+          <div className='eth'><ETH /></div>
         </div>
       </div>
 </main>

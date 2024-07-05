@@ -1,9 +1,3 @@
-/* fearGreed.css */
-.news-wheel {
-    width: 90%;
-    overflow: hidden;
-    position: relative;
-  }
   
   .news-item {
     display: flex;
@@ -12,22 +6,26 @@
     text-align: center;
     animation: fadeIn 1s ease-in-out;
   }
+
+  .title{
+    color: white; /* Text color */
+    text-shadow: 
+    -1px -1px 0 #000, /* Top-left shadow */
+    1px -1px 0 #000,  /* Top-right shadow */
+    -1px 1px 0 #000,  /* Bottom-left shadow */
+    1px 1px 0 #000;   /* Bottom-right shadow */
+    font-size: 18px; 
+    border-radius: 20px; 
+    padding: -20px; 
+}
   
   .news-item h3 {
     margin: 10px 0;
   }
   
-  .news-item img {
-    max-width: 90%;
-    height: auto;
-  }
-  
   @keyframes fadeIn {
     from {
       opacity: 0;
-    }
-    to {
-      opacity: .5;
     }
     to{
         opacity: 1;

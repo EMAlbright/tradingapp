@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import "./news.css";
 
 interface Article {
     source: {
@@ -51,6 +52,10 @@ const NewsWheel = () => {
     return <div>{error}</div>;
   }
 
+  function removeLetterAndAfter(str: string, letter: string) {
+    return str.split(letter)[0];
+  }
+
   const currentArticle = articles[currentArticleIndex];
 
   return (
@@ -58,9 +63,10 @@ const NewsWheel = () => {
          {articles.length > 0 && (
         <div className="news-item">
           <a href={currentArticle.url} target="_blank" rel="noopener noreferrer">
-            <h3 className='font-bold'>{currentArticle.title}</h3>
-            <p>{currentArticle.description}</p>
+            <h3 className='title'>{currentArticle.title}</h3>
             <img src={currentArticle.urlToImage} alt={currentArticle.title} />
+            <p>{currentArticle.description}</p>
+            <p className='text-left text-sm'>{removeLetterAndAfter(currentArticle.publishedAt, "T")}</p>
           </a>
         </div>
       )}
