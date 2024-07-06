@@ -14,6 +14,7 @@ import Silver from '../components/silver';
 import NewsWheel from '../news/page';
 import ETH from '../components/eth';
 import BTC from '../components/btc';
+import Leaderboard from '../leaderboards/page';
 
 export default function Home() {
 
@@ -83,6 +84,7 @@ export default function Home() {
           <div className='newsContainer'>
           < NewsWheel />
         </div>
+        < Leaderboard />
         </div>
         <div className='indicators'>
           <div className='fearGreed'><FearGreedIndex /></div>
