@@ -2,32 +2,30 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./tenYearYield.css";
 
-interface TenYearData {
-      value: number,
-      date: string,
-  }
 
 
 const TenYearYield = () => {
-  const [tenYear, setTenYear] = useState<TenYearData | null>(null);
+  const [tenYear, setTenYear] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchTen = async () => {
-      try {
-        const response = await axios.get('/api/indicators/tenYearYield');
-        setTenYear(response.data);
-        console.log(tenYear?.value);
-      } catch (error) {
-        setError('Failed to fetch Fear and Greed Index');
-      } finally {
+
+    const FetchYield = async () => {
+      try{
+        const res = await axios.get('http://localhost:8080/api/tenYear');
+        setTenYear(res.data.yield);
+      }
+      catch(error){
+        setError('Failed to fetch Ten Year');
+      }
+      finally {
         setLoading(false);
       }
-    };
+    }
     //get every hour
-    fetchTen();
-    const interval = setInterval(fetchTen, 3600000); 
+    FetchYield();
+    const interval = setInterval(FetchYield, 43200000); 
 
     return () => clearInterval(interval); 
   }, []);
@@ -41,10 +39,10 @@ const TenYearYield = () => {
   }
 
   return (
-    <div className="yield-container">
+    <div className="text-[#c0c0c0] font-bold">
       <h2 className='header'>Ten Year Yield</h2>
-      <div className="fgi-value">
-        <div>{tenYear?.value}</div>
+      <div className="text-center font-semibold text-white">
+        <div>{tenYear.toFixed(2)}%</div>
         </div>
     </div>
   );

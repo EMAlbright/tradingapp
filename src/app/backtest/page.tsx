@@ -28,7 +28,7 @@ export default function Backtest() {
 
   const fetchData = () => {
     setLoading(true);
-    axios.get('http://localhost:8080/api/strategies', {
+    axios.get('http://localhost:8001/api/strategies', {
       params: { strategy, stock, start, end }
     })
     .then(response => {
@@ -42,7 +42,7 @@ export default function Backtest() {
   };
 
   const fetchPlot = () => {
-    axios.get('http://localhost:8080/api/plot', {
+    axios.get('http://localhost:8001/api/plot', {
       params: {strategy, stock, start, end},
       responseType: 'blob'
     })

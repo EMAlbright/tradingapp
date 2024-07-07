@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./fearGreed.css";
-
-interface FearGreedIndexData {
-  fgi: {
-    now: {
-      value: number,
-      valueText: string,
-    }
-  }
-}
-
-
+ 
 const FearGreedIndex = () => {
-  const [index, setIndex] = useState<FearGreedIndexData | null>(null);
+  const [index, setIndex] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchIndex = async () => {
       try {
-        const response = await axios.get('/api/indicators/fearGreed');
+        const response = await axios.get('http://localhost:8000/api/fear');
         setIndex(response.data);
+        console.log(response.data);
       } catch (error) {
         setError('Failed to fetch Fear and Greed Index');
       } finally {
@@ -44,14 +35,14 @@ const FearGreedIndex = () => {
     return <div>{error}</div>;
   }
 
-  const angle = index ? (index.fgi.now.value / 100) * 180 - 90 : 0; // Convert value to angle 
+  const angle = index ? (index[0] / 100) * 180 - 90 : 0; // Convert value to angle 
 
   return (
-    <div className="fgi-container">
+    <div className="fgi-container text-[#c0c0c0] font-bold">
       <h2>Fear and Greed Index</h2>
-      <div className="fgi-value">
-        <div>{index?.fgi.now.value}</div>
-        <div>{index?.fgi.now.valueText}</div>
+      <div className="fgi-value text-white">
+        <div>{index[0].toFixed(2)}</div>
+        <div>{index[1]}</div>
       </div>
       <div className="fgi-dial">
         <div className="fgi-arrow" style={{ transform: `rotate(${angle}deg)` }} />

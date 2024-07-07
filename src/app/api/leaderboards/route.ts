@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 import User from "@/models/userModel";
 
+//possibly user binary heap
 export async function GET(request: NextRequest){
     try{
         const users = await User.find({});

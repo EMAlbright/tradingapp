@@ -4,8 +4,6 @@ import { getDataFromToken } from "@/helpers/getDataFromToken";
 import { connect } from "@/dbConfig/dbConfig";
 import axios from "axios";
 
-connect();
-
 export interface iTradePosition {
     symbol: string;
     quantity: number;
@@ -13,6 +11,7 @@ export interface iTradePosition {
 }
 
 export async function GET(request: NextRequest) {
+    await connect();
     try {
         const userID = await getDataFromToken(request);
         const finnhubKey = process.env.NEXT_PUBLIC_FINNHUB_API;

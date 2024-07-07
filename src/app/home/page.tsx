@@ -84,11 +84,11 @@ export default function Home() {
           <div className='newsContainer'>
           < NewsWheel />
         </div>
-        < Leaderboard />
         </div>
         <div className='indicators'>
           <div className='fearGreed'><FearGreedIndex /></div>
           <div className='tenYear'><TenYearYield /></div>
+          < Leaderboard />
         </div>
         <div className='comm'>
           <div className='silver'><Silver /></div>

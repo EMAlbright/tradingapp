@@ -5,9 +5,8 @@ import { error } from "console";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 import { connect } from "@/dbConfig/dbConfig";
 
-connect();
-
 export async function GET(request: NextRequest){
+  await connect();
     try{
         const userID = await getDataFromToken(request);
         const user = await User.findOne({_id:userID}); 

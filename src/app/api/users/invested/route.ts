@@ -19,9 +19,8 @@ export interface iTradePosition {
     price: number,
 }
 
-connect();
-
 export async function GET(request: NextRequest){
+    await connect();
     try{
         const userID = await getDataFromToken(request);
         const user = await User.findOne({_id:userID}); 
