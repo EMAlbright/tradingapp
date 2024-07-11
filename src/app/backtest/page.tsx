@@ -28,7 +28,7 @@ export default function Backtest() {
 
   const fetchData = () => {
     setLoading(true);
-    axios.get('http://localhost:8001/api/strategies', {
+    axios.get('http://localhost:8000/api/strategies', {
       params: { strategy, stock, start, end }
     })
     .then(response => {
@@ -42,7 +42,7 @@ export default function Backtest() {
   };
 
   const fetchPlot = () => {
-    axios.get('http://localhost:8001/api/plot', {
+    axios.get('http://localhost:8000/api/plot', {
       params: {strategy, stock, start, end},
       responseType: 'blob'
     })
@@ -159,22 +159,24 @@ export default function Backtest() {
       <img src={plotUrl} />
             )} 
     </div>
-    <div className="relative mt-4 md:mt-0">
-    <div className="w-full md:w-96 rounded-lg p-4">
-            {hover === "moving_sma" && <MovingSMA/>}
-            {hover === "rsi" &&<RSI />}
-            {hover === "bollinger_band" &&<BB />}
-            {hover === "macd" &&<MACD />}
-            {hover === "cci" &&<CCI />}
-            {hover === "sar" &&<SAR />}
-            {hover === "sto" &&<STO />}
-            {hover === "fib" &&<FIB />}
-            {hover === "wil" &&<WIL />}
-            {hover === "cmo" &&<CMO />}
-            {hover === "cmf" &&<CMF />}
-            {hover === "elder" &&<ELDER />}
+    {!plotUrl && (
+        <div className="relative mt-4 md:mt-0 w-full md:w-auto">
+          <div className="w-full rounded-lg p-4 space-y-6 bg-gray-900">
+            {hover === "moving_sma" && <MovingSMA />}
+            {hover === "rsi" && <RSI />}
+            {hover === "bollinger_band" && <BB />}
+            {hover === "macd" && <MACD />}
+            {hover === "cci" && <CCI />}
+            {hover === "sar" && <SAR />}
+            {hover === "sto" && <STO />}
+            {hover === "fib" && <FIB />}
+            {hover === "wil" && <WIL />}
+            {hover === "cmo" && <CMO />}
+            {hover === "cmf" && <CMF />}
+            {hover === "elder" && <ELDER />}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

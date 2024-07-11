@@ -48,7 +48,7 @@ const Portfolio = () => {
 
         fetchUsername();
         fetchPortfolio();
-        const interval = setInterval(fetchPortfolio, 1200000); 
+        const interval = setInterval(fetchPortfolio, 60000); 
         return () => clearInterval(interval);
     }, []);
 
@@ -79,7 +79,7 @@ const Portfolio = () => {
                 <tbody>
                     {filteredPortfolio?.map((position, index) => (
                         <tr key={index} >
-                            <td className='symbol'>{position.symbol}</td>
+                            <td className='symbol'>{position.symbol.toUpperCase()}</td>
                             <td className='quantity'>{position.quantity}</td>
                             <td className='purchasePrice'>${position.purchasePrice.toFixed(2)}</td>
                             <td className='currentPrice'>${position.currentPrice.toFixed(2)}</td>

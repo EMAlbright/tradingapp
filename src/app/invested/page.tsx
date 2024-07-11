@@ -20,7 +20,7 @@ export default function Invested () {
             } catch(error){
                 setError("error getting investment")
             } finally{
-                setLoading(true);
+                setLoading(false);
             }
         } 
         fetchInvestment();
@@ -45,9 +45,11 @@ export default function Invested () {
           ) : (
             <p>Loading investment...</p>
           )}
-            <p>
-              <span className="percent">{percentage.toFixed(2)}%</span>
-            </p>
+            {percentage !== null && percentage !== undefined && (
+                <p>
+                    <span className="percent">{percentage.toFixed(2)}%</span>
+                </p>
+            )}
         </div>
       );
     

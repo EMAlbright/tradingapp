@@ -35,7 +35,13 @@ const userSchema = new mongoose.Schema({
         type: [{
             symbol: String,
             quantity: Number,
-            price: Number
+            price: Number,
+            takeProfitPrice: Number,
+            stopLossPrice: Number,
+            orderDate: {
+                type: Date,
+                default: Date.now
+            }
         }],
         default: [],
     },

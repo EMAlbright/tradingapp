@@ -38,22 +38,24 @@ export default function ProfilePage (){
                 <i className="animation">
                     </i>Home<i className="animation"></i>
             </button>
-            <h1>Profile</h1>
+            <h1 className="text-4xl font-bold mb-4">Profile</h1>
             <hr/>
-            <p>Profile Page</p>
-            <h2>{data === 'nothing'?"Nothing": <Link
-            href={'/profile/${data}'}>{data}
+            <hr className="border-white w-1/4 mb-4" />
+            <p className="text-lg mb-4">Welcome to your profile page</p>
+            <h2 className="text-2xl mb-4">{data === 'nothing'?"No user data available": <Link
+            href={'/profile/${data}'}>
+            <div className="underline hover:text-blue-300">{data}</div>
             </Link>}</h2>
             <hr/>
-            <button 
-            onClick={logout}
-            className="bg-blue 500 hover:bg-blue-700 
-            mt-4 px-4 rounded">Logout</button>
+            <hr className="border-white w-1/4 mb-4" />
+            <button
+                onClick={logout}
+                className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-6 rounded-md mb-4 focus:outline-none"
+      >     Logout</button>
 
             <button 
             onClick={getUserDetails}
-            className="hover:bg-navyblue-700 
-            mt-4 px-4 rounded">Get User Details</button>
+            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-6 rounded-md mb-4 focus:outline-none">Get User Details</button>
         </div>
     )
 }

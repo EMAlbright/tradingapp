@@ -1,3 +1,7 @@
+import fear_and_greed
+import yfinance as yf
+from flask_cors import CORS
+from flask import jsonify, Flask
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 from backtesting.test import SMA, GOOG
@@ -10,11 +14,66 @@ from bokeh.io.export import get_screenshot_as_png
 from typing import List
 import talib
 from io import BytesIO
-
 from flask import Flask, jsonify, request, send_file, render_template_string
-from flask_cors import CORS
+
 app = Flask(__name__)
 CORS(app)
+
+# get sector
+@app.route("/api/sector", methods=["POST"])
+def getSector():
+    data = request.json
+    portfolio = data.get('portfolio')
+
+    sectors ={}
+    ticker=''
+    # currently only for stocks, need to add cryto with dif library
+    for item in portfolio:
+        ticker = item.get('symbol')
+
+        try:
+            stock = yf.Ticker(ticker)
+            info = stock.info
+            sector = info.get('sector', 'Unknown')
+            sectors[ticker] = {'sector': sector}
+        except Exception as e:
+            sectors[ticker] = {'sector': 'Unknown'}
+
+    return jsonify(sectors), 200
+
+
+# fear greed index 
+@app.route("/api/fear")
+def fgi():
+    data =fear_and_greed.get()
+    return jsonify(data)
+
+# ten year yield rate
+@app.route("/api/tenYear")
+def tenYear():
+    try:
+        treasury = yf.Ticker("^TNX")
+        data = treasury.history(period="1d")
+        if data.empty:
+            return jsonify({"error": "No data available"}), 404
+
+        # Get the last row 
+        last_row = data.iloc[-1]
+        
+        response = {
+            "yield": float(last_row['Close']),
+            "date": last_row.name.strftime('%Y-%m-%d'),
+            "open": float(last_row['Open']),
+            "high": float(last_row['High']),
+            "low": float(last_row['Low']),
+            "volume": int(last_row['Volume'])
+        }
+        return jsonify(response)
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({"error": str(e)}), 500  
+
+# backtest strategies
 class RSI_Strategy(Strategy):
     def init(self):
         price = self.data.Close
@@ -36,6 +95,7 @@ class StochasticOscillatorStrategy(Strategy):
             self.buy()
         elif crossover(self.stoch_d, self.stoch_k) and self.stoch_k[-1] > 80:
             self.sell()
+
 class BBStrategy(Strategy):
     def init(self):
         price = self.data.Close
@@ -47,6 +107,7 @@ class BBStrategy(Strategy):
             # higher than sell
         elif self.data.Close >= self.lower[-1]:
             self.sell()
+
 class MovingAverageStrategy(Strategy):
     def init(self):
         price = self.data.Close
@@ -96,6 +157,7 @@ class BBRMACDStrategy(Strategy):
             self.buy()
         elif (crossover(0, self.macd_line) and (self.rsi[-1] > 70)):
             self.sell()
+
 class MACDStrategy(Strategy):
     def init(self):
         price = self.data.Close
@@ -267,8 +329,7 @@ def return_plot():
 
     return send_file(img, mimetype='image/png')
     # Convert the plot to a PNG image in memory
-    
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8001)
-
+    app.run(debug=True, port=8000)

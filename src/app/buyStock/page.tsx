@@ -9,8 +9,31 @@ export default function BuyStockPage() {
     const [symbol, setSymbol] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState<number | null>(null);
+    const [takeProfitPrice, setTakeProfitPrice] = useState<number | null>(null);
+    const [stopLossPrice, setStopLossPrice] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
+    /**
+     * 
+                <input
+                    className="w-full p-2 border border-gray-600 rounded-lg bg-gray-800 placeholder-gray-400 text-white"
+                    type="number"
+                    min="1"
+                    placeholder="Enter a Take Profit Price"
+                    value={takeProfitPrice || ""}
+                    onChange={(e) => setTakeProfitPrice(Number(e.target.value))}
+                />
+
+                <input
+                    className="w-full p-2 border border-gray-600 rounded-lg bg-gray-800 placeholder-gray-400 text-white"
+                    type="number"
+                    min="1"
+                    placeholder="Enter a Stop Loss Price"
+                    value={stopLossPrice || ""}
+                    onChange={(e) => setStopLossPrice(Number(e.target.value))}
+                />
+     */
 
     const fetchStockPrice = async () => {
         try {  
@@ -62,8 +85,8 @@ export default function BuyStockPage() {
                     className="w-full p-2 border border-gray-600 rounded-lg bg-gray-800 placeholder-gray-400 text-white"
                     type="text"
                     placeholder="Enter a ticker"
-                    value={symbol}
-                    onChange={(e) => setSymbol(e.target.value)}
+                    value={symbol.toUpperCase()}
+                    onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                 />
                 <button
                     onClick={fetchStockPrice}
@@ -84,7 +107,7 @@ export default function BuyStockPage() {
                     placeholder="Enter a quantity"
                     value={quantity}
                     onChange={(e) => setQuantity(Number(e.target.value))}
-                />
+                />                
                 <button
                     onClick={onBuyStock}
                     className="w-full p-2 bg-green-600 hover:bg-green-700 rounded-lg"

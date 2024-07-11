@@ -21,7 +21,7 @@ export async function POST(request: NextRequest){
     }
     //check if user has the symbol/ticker already
     const existingPosition: typeof user.tradePositions[0] | undefined = user.tradePositions.find(
-        (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol
+        (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol.toUpperCase()
       );
     if(existingPosition && existingPosition.price == currPrice){
         existingPosition.quantity += quantity;
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest){
     else {
         // Add new trade position
         user.tradePositions.push({
-            symbol,
+            symbol: symbol.toUpperCase(),
             quantity,
             price: currPrice
     });
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest){
         balance: user.balance, 
         tradePosition: {
             position: position,
-            symbol: symbol,
+            symbol: symbol.toUpperCase(),
             quantity: quantity,
             price: currPrice
         }

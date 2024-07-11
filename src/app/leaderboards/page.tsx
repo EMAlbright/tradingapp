@@ -16,7 +16,6 @@ export default function Leaderboard(){
             try{
                 const res = await axios.get("/api/leaderboards");
                 setNetworth(res.data.netWorth);
-                console.log(res.data.netWorth);
             } catch(error){
                 toast.error("Failed to get balance");
             }

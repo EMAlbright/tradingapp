@@ -1,6 +1,4 @@
-import { ST } from 'next/dist/shared/lib/utils';
 import React from 'react';
-import rsiImage from "../../../../public/rsi.webp";
 export const MovingSMA: React.FC = () => {
   return (
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">

@@ -58,15 +58,28 @@ const NewsWheel = () => {
 
   const currentArticle = articles[currentArticleIndex];
 
+  const getNextArticleIndex = () => {
+    let newIndex = currentArticleIndex + 1;
+    while (newIndex < articles.length) {
+      if (!articles[newIndex].url.includes('https://removed.com')) {
+        return newIndex;
+      }
+      newIndex++;
+    }
+    return 0; 
+  };
+
+  const nextArticleIndex = getNextArticleIndex();
+
   return (
     <div className="news-wheel text-white">
          {articles.length > 0 && (
         <div className="news-item">
-          <a href={currentArticle.url} target="_blank" rel="noopener noreferrer">
-            <h3 className='title'>{currentArticle.title}</h3>
-            <img src={currentArticle.urlToImage} alt={currentArticle.title} />
-            <p>{currentArticle.description}</p>
-            <p className='text-left text-sm'>{removeLetterAndAfter(currentArticle.publishedAt, "T")}</p>
+          <a href={articles[nextArticleIndex].url} target="_blank" rel="noopener noreferrer">
+            <h3 className='title'>{articles[nextArticleIndex].title}</h3>
+            <img src={articles[nextArticleIndex].urlToImage} alt={articles[nextArticleIndex].title} />
+            <p>{articles[nextArticleIndex].description}</p>
+            <p className='text-left text-sm'>{removeLetterAndAfter(articles[nextArticleIndex].publishedAt, "T")}</p>
           </a>
         </div>
       )}

@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     }
 
     const existingPosition: typeof user.tradePositions[0] | undefined = user.tradePositions.find(
-        (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol
+        (position: { symbol: string, quantity: number, price: number }) => position.symbol === symbol.toUpperCase()
       );
     if(existingPosition && existingPosition.price == currPrice){
         existingPosition.quantity += quantity;
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     else {
         // Add new trade position
         user.tradePositions.push({
-            symbol,
+            symbol: symbol.toUpperCase(),
             quantity,
             price: currPrice
     });
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
         balance: user.balance, 
         tradePosition: {
             position: position,
-            symbol: symbol,
+            symbol: symbol.toUpperCase(),
             quantity: quantity,
             price: currPrice
         }

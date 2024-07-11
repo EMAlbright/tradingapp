@@ -13,7 +13,7 @@ const TenYearYield = () => {
 
     const FetchYield = async () => {
       try{
-        const res = await axios.get('http://localhost:8080/api/tenYear');
+        const res = await axios.get('http://localhost:8000/api/tenYear');
         setTenYear(res.data.yield);
       }
       catch(error){
