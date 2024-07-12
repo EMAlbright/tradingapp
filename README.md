@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Stock Market Simulator for New Investors
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+This project is an advanced Stock Market Simulator designed to provide a comprehensive learning platform for new investors. It offers various functionalities including backtesting trading strategies, trading cryptocurrencies and stocks, viewing portfolio performance, and more. The aim is to create an engaging and informative tool that helps users understand and navigate the stock market with confidence.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Backtesting Trading Strategies:** Test your trading strategies with historical data to see how they would have performed.
+- **Real-Time Trading:** Trade cryptocurrencies and stocks with real-time price updates.
+- **Portfolio Management:** Track your investments, view current holdings, and monitor performance.
+- **Leaderboards:** Compete with other users and see who has the highest net worth.
+- **Market Indicators:** Access key market indicators such as the Fear and Greed Index and the 10-Year Yield.
+- **Whale Tracker:** Stay updated with trading activities of significant market players.
+- **Stop Loss and Take Profit Orders:** Automate your trading strategies with these advanced order types.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technology Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Frontend:** Next.js, React, TypeScript
+- **Backend:** Python, Flask, RESTful APIs
+- **Database:** MongoDB
+- **Data Sources:** Coincap, Finnhub
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- **Root Directory:**
+  - **tradingapp (Next.js / main):**
+    - **src:**
+      - **app:** Contains frontend code and API routes.
+        - **api:** Contains different folders with either Python backend files or TypeScript backend files.
+      - **models:** Contains MongoDB models.
+  - **dbconfig:** Database configuration file.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Current Status
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**This project is still in development.** Some features might not be fully functional, and there could be frequent updates and changes as we continue to enhance and expand the simulator. 
 
-## Deploy on Vercel
+## Future Plans
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Enhanced User Interface:** Make the platform more user-friendly and visually appealing.
+- **Additional Market Indicators:** Include more market indicators for better analysis.
+- **Educational Resources:** Provide tutorials and resources to help users learn more about investing and trading.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
