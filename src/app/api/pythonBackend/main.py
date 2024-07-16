@@ -23,24 +23,75 @@ CORS(app)
 @app.route("/api/sector", methods=["POST"])
 def getSector():
     data = request.json
-    portfolio = data.get('portfolio')
-
-    sectors ={}
-    ticker=''
+    print(data)
+    # {'tickerHoldings': ['MSFT']}
+    stockInformation ={}
+    tickers = data.get('tickerHoldings', [])
     # currently only for stocks, need to add cryto with dif library
-    for item in portfolio:
-        ticker = item.get('symbol')
-
+    # response is going to be differen
+    for ticker in tickers:
         try:
             stock = yf.Ticker(ticker)
             info = stock.info
             sector = info.get('sector', 'Unknown')
-            sectors[ticker] = {'sector': sector}
+            summary = info.get('longBusinessSummary', 'Unknown')
+            volume = info.get('volume', 'Unknown')
+            avgVolume = info.get('averageVolume', 'Unknown')
+            yearHigh = info.get('fiftyTwoWeekHigh', 'Unknown')
+            yearLow = info.get('fiftyTwoWeekLow', 'Unknown')
+            twoHundredDayAverage = info.get('twoHundredDayAverage', 'Unknown')
+            fiftyDayAverage = info.get('fiftyDayAverage', 'Unknown')
+            marketCap = info.get('marketCap', 'Unknown')
+            targetHigh = info.get('targetHighPrice', 'Unknown')
+            targetLow = info.get('targetLowPrice', 'Unknown')
+            analystOpinion = info.get('recommendationKey', 'Unknown')
+            analystCount = info.get('numberOfAnalystOpinions', 'Unknown')
+
+            stockInformation[ticker] = {
+                               'sector': sector,
+                               'summary': summary,
+                               'volume': volume,
+                               'avgVolume': avgVolume,
+                               'yearHigh': yearHigh,
+                               'yearLow': yearLow,
+                               'twoHundredDayAverage': twoHundredDayAverage,
+                               'fiftyDayAverage': fiftyDayAverage,
+                               'marketCap': marketCap,
+                               'targetHigh': targetHigh,
+                               'targetLow': targetLow,
+                               'analystOpinion': analystOpinion,
+                               'analystCount': analystCount}
         except Exception as e:
-            sectors[ticker] = {'sector': 'Unknown'}
+            stockInformation[ticker] = {'sector': 'Unknown'}
+            print(f"Error fetching data for {ticker}: {e}") 
+    return jsonify(stockInformation), 200
 
-    return jsonify(sectors), 200
+# information for each major sector
+@app.route("/api/sector/generalInformation")
+def sectorInformation():
+    sector_etfs = {
+        "Technology": "XLK",
+        "Healthcare": "XLV",
+        "Financials": "XLF",
+        "Consumer Discretionary": "XLY",
+        "Industrials": "XLI",
+        "Energy": "XLE",
+        "Utilities": "XLU",
+        "Materials": "XLB",
+        "Real Estate": "XLRE",
+        "Consumer Staples": "XLP",
+        "Communication Services": "XLC"}
 
+    sectorInformation = {}
+
+    for sector, ticker in sector_etfs.items():
+        stock = yf.Ticker(ticker)
+        info = stock.info
+        sectorInformation[sector] = info
+    return jsonify(sectorInformation)
+
+stock = yf.Ticker("MSFT")
+print(stock.info)
 
 # fear greed index 
 @app.route("/api/fear")

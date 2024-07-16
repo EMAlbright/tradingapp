@@ -21,7 +21,7 @@ export default function Leaderboard(){
             }
         };
         getNetworth();
-        const interval = setInterval(getNetworth, 60000); 
+        const interval = setInterval(getNetworth, 300000); 
 
         return () => clearInterval(interval); 
     }, []);

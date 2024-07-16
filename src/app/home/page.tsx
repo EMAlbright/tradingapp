@@ -13,7 +13,6 @@ import Gold from '../components/gold';
 import Silver from '../components/silver';
 import NewsWheel from '../news/page';
 import ETH from '../components/eth';
-import UserHoldingStats from '../components/userHoldingStats/page';
 import BTC from '../components/btc';
 import Leaderboard from '../leaderboards/page';
 
@@ -96,7 +95,6 @@ export default function Home() {
           <div className='gold'><Gold /></div>
           <div className='btc'><BTC /></div>
           <div className='eth'><ETH /></div>
-          <div className='userStats'><UserHoldingStats /></div>
         </div>
       </div>
 </main>

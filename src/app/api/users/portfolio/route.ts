@@ -69,11 +69,8 @@ export async function GET(request: NextRequest) {
                 };
             } 
         });
-        const pythonBackendUrl = 'http://localhost:8000/api/sector';
-        const response = await axios.post(pythonBackendUrl, {portfolio});
-        const sectorData = response.data;
 
-        return NextResponse.json({ portfolio, totalInitialInvestment, totalCurrentValue, sectorData});
+        return NextResponse.json({ portfolio, totalInitialInvestment, totalCurrentValue});
 
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

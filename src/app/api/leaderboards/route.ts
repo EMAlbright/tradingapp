@@ -11,7 +11,6 @@ export async function GET(request: NextRequest){
             name: user.username,
             networth: user.balance + user.invested
         }));
-        console.log(usersNetworth);
 
         //sort users networth 
         usersNetworth.sort((a, b) => b.networth - a.networth);

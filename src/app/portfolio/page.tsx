@@ -48,7 +48,7 @@ const Portfolio = () => {
 
         fetchUsername();
         fetchPortfolio();
-        const interval = setInterval(fetchPortfolio, 60000); 
+        const interval = setInterval(fetchPortfolio, 1200000); 
         return () => clearInterval(interval);
     }, []);
 
