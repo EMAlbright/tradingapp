@@ -33,11 +33,12 @@ This project is an advanced Stock Market Simulator designed to provide a compreh
 
 ## Current Status
 
-**This project is still in development.** Some features might not be fully functional, and there could be frequent updates and changes as we continue to enhance and expand the simulator. 
+**This project is still in development.** Some features might not be fully functional, and there could be frequent updates and changes as I continue to enhance and expand the simulator. 
 
 ## Future Plans
 
 - **Enhanced User Interface:** Make the platform more user-friendly and visually appealing.
+- **Enhanced Analytics:** Provide users with in-depth portfolio analysis, including sector performance, future trends, and areas where their portfolio is lacking. 
 - **Additional Market Indicators:** Include more market indicators for better analysis.
 - **Educational Resources:** Provide tutorials and resources to help users learn more about investing and trading.
 
