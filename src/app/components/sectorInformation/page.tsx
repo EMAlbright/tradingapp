@@ -1,3 +1,4 @@
+"use client"
 import axios from "axios";
 import { NextResponse } from "next/server";
 import { useEffect, useState } from "react"

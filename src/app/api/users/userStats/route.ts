@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
         const pythonBackendUrl = 'http://localhost:8000/api/sector';
         const stockData = await axios.post(pythonBackendUrl, {tickerHoldings});
         const sectorData = stockData.data;
+        
         return NextResponse.json({sectorData});
 
     } catch (error: any) {

@@ -1,7 +1,9 @@
+"use client"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import Portfolio from "@/app/portfolio/page";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,32 +27,65 @@ interface PortfolioData {
     };
 }
 
+interface PortfolioPosition {
+    symbol: string;
+    quantity: number;
+    purchasePrice: number;
+    currentPrice: number;
+    percentageChange: number;
+    totalCost: number;
+    currentValue: number;
+}
+
+interface Portfolio {
+    portfolio: PortfolioPosition[];
+    totalInitialInvestment: number;
+    totalCurrentValue: number;
+    overallPercentageChange: number;
+}
+
 const UserHoldingStats = () => {
+    const [holdings, setHoldings] = useState<Portfolio | null>(null);
     const [userHoldingStats, setUserHoldingStats] = useState<PortfolioData | null>(null);
     const [chartData, setChartData] = useState<any>(null);
-    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         const fetchData = async() => {
             try {
                 const res = await axios.get("../../api/users/userStats");
                 setUserHoldingStats(res.data);
-                console.log(res.data);
                 processChartData(res.data.sectorData);
             } catch(error) {
                 console.error("Error fetching user stats: ", error);
             }
         }
+
+        const fetchPosition = async() => {
+            try{
+                const res = await axios.get("../../api/users/portfolio");
+                setHoldings(res.data);
+                console.log(res.data);
+            }
+            catch(error) {
+                console.error("Error fetching portfolio")
+            }
+        }
+        fetchPosition();
         fetchData();
     }, []);
 
-    const processChartData = (sectorData: PortfolioData['sectorData']) => {
+    // this should be updated to not just get the stock but also the total value of 
+    // stock holding / by invested amount to get a % of your portfolio
+
+    const processChartData = (sectorData: PortfolioData['sectorData'], ) => {
+        //change sectorCounts to count total Value of sector
         const sectorCounts: {[key: string]: number} = {};
         Object.values(sectorData).forEach(({ sector }) => {
             sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
         });
 
         const labels = Object.keys(sectorCounts);
+        // just need to change data
         const data = Object.values(sectorCounts);
         const total = data.reduce((sum, value) => sum + value, 0);
         const percentages = data.map(value => ((value / total) * 100).toFixed(2));
@@ -97,7 +132,7 @@ return(
                         <div className="mt-4 max-h-95 overflow-y-auto">
                             {Object.entries(userHoldingStats?.sectorData).map(([symbol, data]) => (
                                 <div key={symbol} className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 mb-4">
-                                    <h3 className="text-lg font-semibold text-blue-600 mb-2">{symbol}</h3>
+                                    <h3 className="text-lg font-semibold text-blue-600 mb-2">{symbol}:</h3>
                                     <p className="text-sm text-black"><span className="font-bold">Sector:</span> {data.sector}</p>
                                     <p className="text-sm text-black"><span className="font-bold">Analyst Opinion:</span> {data.analystOpinion}</p>
                                     <p className="text-sm text-black"><span className="font-bold">Number of Analysts:</span> {data.analystCount}</p>
