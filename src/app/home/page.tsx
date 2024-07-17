@@ -18,26 +18,8 @@ import Leaderboard from '../leaderboards/page';
 
 export default function Home() {
 
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY + window.innerHeight;
-    const heightThreshold = 2000;
-    if (scrollPosition >= heightThreshold && !loading) {
-      setLoading(true);
-      
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <main className="mainContainer">
