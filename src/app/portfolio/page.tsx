@@ -64,7 +64,7 @@ const Portfolio = () => {
 
     return (
         <div className='container'>
-            <h2 className='heading'>{username}'s Portfolio</h2>
+            <h2 className='heading'>{username}s Portfolio</h2>
             <table className='portfolioTable'>
                 <thead>
                     <tr>

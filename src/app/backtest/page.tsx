@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from "next/navigation";
 import "./backtest.css";
+import Image from 'next/image';
 import {MovingSMA, RSI, BB, MACD, CCI, SAR, STO, FIB, WIL, CMO, ELDER, CMF} from "../components/indicatorsFE/indicatorSide";
 interface BacktestResult {
   AvgTrade: number;
@@ -156,7 +157,7 @@ export default function Backtest() {
     </div>
     <div className='backTestGraph'>
     {plotUrl && (
-      <img src={plotUrl} />
+      <Image src={plotUrl} alt='Backtest_Image'/>
             )} 
     </div>
     {!plotUrl && (
