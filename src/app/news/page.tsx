@@ -79,7 +79,7 @@ const NewsWheel = () => {
         <div className="news-item">
           <a href={articles[nextArticleIndex].url} target="_blank" rel="noopener noreferrer">
             <h3 className='title'>{articles[nextArticleIndex].title}</h3>
-            <Image src={articles[nextArticleIndex].urlToImage} alt={articles[nextArticleIndex].title} />
+            <img src={articles[nextArticleIndex].urlToImage} alt={articles[nextArticleIndex].title} />
             <p>{articles[nextArticleIndex].description}</p>
             <p className='text-left text-sm'>{removeLetterAndAfter(articles[nextArticleIndex].publishedAt, "T")}</p>
           </a>
