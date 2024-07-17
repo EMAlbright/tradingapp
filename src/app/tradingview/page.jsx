@@ -1,4 +1,5 @@
 // TradingViewWidget.jsx
+"use client"
 import React, { useEffect, useRef, memo} from 'react';
 
 function TradingViewWidget() {
