@@ -25,7 +25,7 @@ export const BB: React.FC = () => {
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
       <Image src="https://www.investopedia.com/thmb/nTfemzLtwmgAFJ5k-qXRxUFn95Y=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dotdash_INV-final-Bollinger-Band-Definition-June-2021-01-518977e3031d405497003f1747a3c250.jpg"alt='image'/>
       <h2>Bollinger Band:</h2>
-      <p>Bollinger Bands use a moving average and standard deviation to create bands around a security's price, showing volatility and potential breakout points.</p>
+      <p>Bollinger Bands use a moving average and standard deviation to create bands around a security&apos;s price, showing volatility and potential breakout points.</p>
     </div>
   );
 }
@@ -35,7 +35,7 @@ export const MACD: React.FC = () => {
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
       <Image src="https://www.investopedia.com/thmb/7cxoCzC1VLFakQV6-I5vzvBjrV8=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dotdash_Final_Moving_Average_Convergence_Divergence_MACD_Aug_2020-02-58bf5e34f0f94730b6e2d56ef9032b6d.jpg"alt='image'/>
       <h2>MACD (Moving Average Convergence Divergence):</h2>
-      <p>MACD is a trend-following momentum indicator that shows the relationship between two moving averages of a security's price, helping traders identify potential buy or sell signals.</p>
+      <p>MACD is a trend-following momentum indicator that shows the relationship between two moving averages of a security&apos;s price, helping traders identify potential buy or sell signals.</p>
     </div>
   );
 };
@@ -45,7 +45,7 @@ export const CCI: React.FC = () => {
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
       <Image src="https://www.investopedia.com/thmb/_OHdcP5Y09BRg7yFOH3HbmDDmC4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/AAPL_CCI_Daily-9c9b7f0538d7459ca9855348c62d04a8.png"alt='image'/>
       <h2>CCI (Commodity Channel Index):</h2>
-      <p>CCI measures the variation of a security's price from its statistical average, indicating potential overbought or oversold conditions and possible trend changes.</p>
+      <p>CCI measures the variation of a security&apos;s price from its statistical average, indicating potential overbought or oversold conditions and possible trend changes.</p>
     </div>
   );
 };
@@ -65,7 +65,7 @@ export const STO: React.FC = () => {
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
       <Image src="https://www.investopedia.com/thmb/ypm7uHj3iXKDAts7uxfwr1Sj27U=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dotdash_INV-final-Stochastic-Oscillator-Jun-2021-01-0580390daa1c44ffaac8c7ffcbb96f6a.jpg"alt='image'/>
       <h2>Stochastic Oscillator:</h2>
-      <p>The Stochastic Oscillator compares a security's closing price to its price range over a specified period, highlighting overbought or oversold conditions and potential trend shifts.</p>
+      <p>The Stochastic Oscillator compares a security&apos;s closing price to its price range over a specified period, highlighting overbought or oversold conditions and potential trend shifts.</p>
     </div>
   );
 };
@@ -75,7 +75,7 @@ export const FIB: React.FC = () => {
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
       <Image src="https://www.investopedia.com/thmb/LoFvhR15oPoEXdtlKNzzQExZ07o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dotdash_INV-Fibonacci-Retracement-Levels-June-2021-01-a036f12c487e47e08e14ab42e1f1823b.jpg"alt='image'/>
       <h2>Fibonacci Retracement:</h2>
-      <p>Fibonacci Retracement uses Fibonacci ratios to identify potential support and resistance levels in a security's price movement, aiding in determining entry and exit points.</p>
+      <p>Fibonacci Retracement uses Fibonacci ratios to identify potential support and resistance levels in a security&apos;s price movement, aiding in determining entry and exit points.</p>
     </div>
   );
 };
@@ -85,7 +85,7 @@ export const WIL: React.FC = () => {
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
       <Image src="https://www.investopedia.com/thmb/Xrp1rG4VXXvAmWp8MtNSk3V08zE=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dotdash_INV-final-Williams-R-Definition-and-Uses-June-2021-01-b5f61d727df74545967310850ad46802.jpg"alt='image'/>
       <h2>Williams %R Strategy:</h2>
-      <p>Williams %R Strategy measures overbought or oversold conditions based on a security's closing price in relation to its price range over a specified period, helping traders identify potential reversal points.</p>
+      <p>Williams %R Strategy measures overbought or oversold conditions based on a security&apos;s closing price in relation to its price range over a specified period, helping traders identify potential reversal points.</p>
     </div>
   );
 };
@@ -95,7 +95,7 @@ export const CMO: React.FC = () => {
     <div className="w-full p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
       <Image src="https://www.investopedia.com/thmb/5qc_9tU_pX6Zc8SlQWzoAPkylDQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/divergence-5bfd6f7246e0fb002645894b"alt='image'/>
       <h2>Chande Momentum Oscillator (CMO):</h2>
-      <p>CMO measures the momentum of a security's price movement, highlighting potential trend changes and divergence between price and momentum, aiding in decision-making for traders.</p>
+      <p>CMO measures the momentum of a security&apos;s price movement, highlighting potential trend changes and divergence between price and momentum, aiding in decision-making for traders.</p>
     </div>
   );
 };
