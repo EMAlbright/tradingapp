@@ -90,9 +90,6 @@ def sectorInformation():
         sectorInformation[sector] = info
     return jsonify(sectorInformation)
 
-stock = yf.Ticker("MSFT")
-print(stock.info)
-
 # fear greed index 
 @app.route("/api/fear")
 def fgi():
@@ -274,6 +271,9 @@ class CMFStrategy(Strategy):
         elif self.cmf[-1] < 0:
             self.sell()
 
+data= web.DataReader("MSFT", "stooq","02-14-2024", "06-13-2024")
+backtestData = Backtest(data, ElderRayIndexStrategy, commission=.002, exclusive_orders=True)
+print(backtestData.run())
 
 class CCIStrategy(Strategy):
     def init(self):
@@ -333,8 +333,8 @@ def return_strategies():
     
     start_date = dt.datetime.strptime(start, '%Y-%m-%d')
     end_date = dt.datetime.strptime(end, '%Y-%m-%d')
-
-    data= web.DataReader(stock, "stooq", start_date, end_date)
+    data =yf.download(stock, start=start_date, end=end_date)
+    #data= web.DataReader(stock, "stooq", start_date, end_date)
     backtestData = Backtest(data, strategy_class, commission=.002, exclusive_orders=True)
     statsData = backtestData.run()
     stats_json = statsData.to_json()

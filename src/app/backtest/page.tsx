@@ -16,6 +16,7 @@ interface BacktestResult {
 }
 
 export default function Backtest() {
+  const key = process.env.NEXT_PUBLIC_ROUTE;
   const [data, setData] = useState<BacktestResult | null>(null);
   const [plotHtml, setPlotHtml] = useState<string>('');
   const [strategy, setStrategy] = useState('');
@@ -27,9 +28,9 @@ export default function Backtest() {
   const [hover, setHover] = useState<string | null>(null);
   const router = useRouter();
 
-  const fetchData = () => {
+  const fetchData = async() => {
     setLoading(true);
-    axios.get('http://localhost:8000/api/strategies', {
+    axios.get(`${key}/api/strategies`, {
       params: { strategy, stock, start, end }
     })
     .then(response => {
@@ -43,7 +44,7 @@ export default function Backtest() {
   };
 
   const fetchPlot = () => {
-    axios.get('http://localhost:8000/api/plot', {
+    axios.get(`${key}/api/plot`, {
       params: {strategy, stock, start, end},
       responseType: 'blob'
     })

@@ -8,12 +8,12 @@ const TenYearYield = () => {
   const [tenYear, setTenYear] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const key = process.env.NEXT_PUBLIC_ROUTE;
   useEffect(() => {
 
     const FetchYield = async () => {
       try{
-        const res = await axios.get('http://localhost:8000/api/tenYear');
+        const res = await axios.get(`${key}/api/tenYear`);
         setTenYear(res.data.yield);
       }
       catch(error){

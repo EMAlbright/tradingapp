@@ -12,6 +12,7 @@ export interface iTradePosition {
 export async function GET(request: NextRequest) {
     await connect();
     try {
+        const key = process.env.NEXT_PUBLIC_ROUTE;
         const userID = await getDataFromToken(request);
         const user = await User.findOne({ _id: userID });
         if (!user) {
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
         const positions = user.tradePositions || [];
         const tickerHoldings = positions.map((position: iTradePosition) => position.symbol);
 
-        const pythonBackendUrl = 'http://localhost:8000/api/sector';
+        const pythonBackendUrl = `${key}/api/sector`;
         const stockData = await axios.post(pythonBackendUrl, {tickerHoldings});
         const sectorData = stockData.data;
         

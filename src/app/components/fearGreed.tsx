@@ -7,10 +7,12 @@ const FearGreedIndex = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const key = process.env.NEXT_PUBLIC_ROUTE;
+
   useEffect(() => {
     const fetchIndex = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/fear');
+        const response = await axios.get(`${key}/api/fear`);
         setIndex(response.data);
         console.log(response.data);
       } catch (error) {
