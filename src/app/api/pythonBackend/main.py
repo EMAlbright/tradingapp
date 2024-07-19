@@ -24,7 +24,7 @@ CORS(app)
 def getSector():
     data = request.json
     print(data)
-    # {'tickerHoldings': ['MSFT']}
+   
     stockInformation ={}
     tickers = data.get('tickerHoldings', [])
     # currently only for stocks, need to add cryto with dif library
