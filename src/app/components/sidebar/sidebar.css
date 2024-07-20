@@ -1,0 +1,61 @@
+
+    .topbarContainer {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px;
+    }
+    
+    .HeaderLine {
+      position: relative;
+      background-color: #c0c0c0;
+      height: 4px;
+      margin-bottom: 20px;
+    }
+    
+    .title {
+      font-size: 25px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    
+    .Options {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+    
+    .Options div {
+      margin-bottom: 10px;
+    }
+    
+    
+    .Options a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    .Account {
+      position: relative;
+      left: 0;
+    }
+    
+    .searchAsset {
+      position: relative;
+      top: 0;
+      left: 0;
+    }
+    .contentContainer {
+      display: flex;
+      gap: 20px;
+    }
+  
+    .indicators {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }

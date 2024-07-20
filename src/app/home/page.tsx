@@ -45,7 +45,7 @@ export default function Home() {
         <Link href="/backtest">Strategies</Link>
       </div>
       <div className="Learn">
-        <Link href="/whales" className="Learn">
+        <Link href="/components/construction" className="Learn">
           Whale Tracker
         </Link>
       </div>
