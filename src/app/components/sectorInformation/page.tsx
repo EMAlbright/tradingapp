@@ -17,11 +17,12 @@ interface SectorMain {
 const SectorInformation = () => {
     const [sectorInfo, setSectorInfo] = useState<SectorMain | null>(null);
     const [error, setError] = useState("");
+    const key = process.env.NEXT_PUBLIC_ROUTE;
     useEffect(() => {
 
         const fetchSectorData = async() => {
             try{
-                const res = await axios.get("http://localhost:8000/api/sector/generalInformation")
+                const res = await axios.get(`${key}/api/sector/generalInformation`)
                 const data = res.data;
                 setSectorInfo(data);
             }

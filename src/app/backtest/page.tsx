@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from "next/navigation";
-import "./backtest.css";
+import SideBar from '../components/sidebar/page';
 import Image from 'next/image';
 import {MovingSMA, RSI, BB, MACD, CCI, SAR, STO, FIB, WIL, CMO, ELDER, CMF} from "../components/indicatorsFE/indicatorSide";
 interface BacktestResult {
@@ -84,10 +84,8 @@ export default function Backtest() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:space-x-4 md:flex-row items-center justify-center bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4">
-      <button className="homeButton" onClick={onHome}>
-        <i className="animation">
-      </i>Home<i className="animation"></i></button>
+    <div className="min-h-screen bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4 flex">
+      <SideBar />
       <div className="w-full max-w-md p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center">Backtest</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -162,7 +160,7 @@ export default function Backtest() {
             )} 
     </div>
     {!plotUrl && (
-        <div className="relative mt-4 md:mt-0 w-full md:w-auto">
+        <div className="relative mt-4 md:mt-0 w-full md:w-auto pl-4">
           <div className="w-full rounded-lg p-4 space-y-6 bg-gray-900">
             {hover === "moving_sma" && <MovingSMA />}
             {hover === "rsi" && <RSI />}

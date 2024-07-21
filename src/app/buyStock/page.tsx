@@ -78,13 +78,13 @@ export default function BuyStockPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4">
+        <div className="w-full max-w-md p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
             <div className="w-full max-w-md p-8 space-y-6 bg-gray-900 rounded-lg shadow-md">
-                <h1 className="text-2xl font-bold text-center">Satire Trade</h1>
+                <h1 className="text-2xl font-bold text-center">Stock Simulator</h1>
                 <input
                     className="w-full p-2 border border-gray-600 rounded-lg bg-gray-800 placeholder-gray-400 text-white"
                     type="text"
-                    placeholder="Enter a ticker"
+                    placeholder="Enter a stock ticker"
                     value={symbol.toUpperCase()}
                     onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                 />

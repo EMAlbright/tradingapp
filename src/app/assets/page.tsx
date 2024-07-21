@@ -2,23 +2,19 @@
 import { useEffect } from "react";
 import UserHoldingStats from "../components/userHoldingStats/page";
 import SectorInformation from "../components/sectorInformation/page";
-import { useRouter } from "next/navigation";
-import "./page.css";
+import SideBar from "../components/sidebar/page";
 
-export default function Assets() {  
-    const router = useRouter()
-    const onHome = async() => {
-        router.push("/home");
-    }
-
+export default function Assets() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4">
-            <button className="homeButton" onClick={onHome}>
-                <i className="animation">
-                </i>Home<i className="animation"></i></button>
-            <div className="mt-20">
-            <UserHoldingStats />
-            <SectorInformation />
+        <div className="min-h-screen bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4 flex">
+            <SideBar />
+            <div className="flex-1 flex flex-col overflow-y-auto">
+                <div className="mb-8">
+                    <UserHoldingStats />
+                </div>
+                <div>
+                    <SectorInformation />
+                </div>
             </div>
         </div>
     )
