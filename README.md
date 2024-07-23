@@ -6,7 +6,7 @@ This project is an advanced Stock Market Simulator designed to provide a compreh
 
 ## Features
 
-- **Backtesting Trading Strategies:** Test your trading strategies with historical data to see how they would have performed.
+- **Backtesting Trading Strategies:** Test common trading strategies with historical data to see how they would have performed. 
 - **Real-Time Trading:** Trade cryptocurrencies and stocks with real-time price updates.
 - **Portfolio Management:** Track your investments, view current holdings, and monitor performance.
 - **Leaderboards:** Compete with other users and see who has the highest net worth.
@@ -37,7 +37,8 @@ This project is an advanced Stock Market Simulator designed to provide a compreh
 
 ## Future Plans
 
-- **Enhanced User Interface:** Make the platform more user-friendly and visually appealing.
+- **Further Development of Backtesting Strategies:** Currently using TA-Lib for implementation of technical indicators (such as the CMO, MACD, RSI, etc.), and the Backtesting library to get the results of these trades.
+- I plan on adding more mechanisms into this page specifically to give users more control over how they trade certain stocks in order to find patterns, what works, and what does not work.
 - **Enhanced Analytics:** Provide users with in-depth portfolio analysis, including sector performance, future trends, and areas where their portfolio is lacking. 
 - **Additional Market Indicators:** Include more market indicators for better analysis.
 - **Educational Resources:** Provide tutorials and resources to help users learn more about investing and trading.
