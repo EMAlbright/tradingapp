@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
         const tickerPrices = await Promise.all(
             tickerHoldings.map(async (symbol: string) => {
                 try {
-                    const response = await axios.get(`https://api.coincap.io/v2/assets/${symbol}`);
+                    const response = await axios.get(`https://api.coincap.io/v2/assets/${symbol.toLowerCase()}`);
                     return { symbol, priceUsd: parseFloat(response.data.data.priceUsd) }; // Crypto price
                 } catch (cryptoError) {
                     console.error(`${symbol}: ${cryptoError}`);
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
         let totalCurrentValue = 0;
 
         const portfolio = positions.map((position: iTradePosition, index: number) => {
-            const currPriceObj = tickerPrices.find(price => price.symbol === position.symbol);
+            const currPriceObj = tickerPrices.find(price => price.symbol.toUpperCase() === position.symbol.toUpperCase());
             if (currPriceObj && currPriceObj.priceUsd !== null) {
                 const currPrice = currPriceObj.priceUsd;
                 const purchasePrice = position.price;
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
                 totalCurrentValue += currValue;
 
                 return {
-                    symbol: position.symbol,
+                    symbol: position.symbol.toUpperCase(),
                     quantity: quantity,
                     purchasePrice: purchasePrice,
                     currentPrice: currPrice,

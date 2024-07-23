@@ -39,6 +39,7 @@ const Portfolio = () => {
         const fetchPortfolio = async () => {
             try {
                 const response = await axios.get('/api/users/portfolio');
+                console.log("portfolio: ", response.data);
                 setPortfolioData(response.data);
             } catch (error) {
                 setError('Failed to fetch portfolio data');

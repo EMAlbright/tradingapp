@@ -58,6 +58,12 @@ export default function Backtest() {
       setLoading(false);
     });
   }
+  /**
+   *  146-148
+   * <button onClick={fetchPlot} className="mt-4 p-2 bg-green-600 hover:bg-green-700 rounded-lg">
+      Show Plot
+     </button>
+   */
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -78,10 +84,6 @@ export default function Backtest() {
   const handleHover = (event: React.MouseEvent<HTMLSelectElement>) => {
     setHover((event.target as HTMLSelectElement).value);
   };
-
-  const onHome = async() =>{
-    router.push("/home");
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-800 to-blue-900 text-white p-4 flex">
@@ -147,9 +149,7 @@ export default function Backtest() {
               <div>Win Rate: {data.WinRate.toFixed(2)}%</div>
               <div>Best Trade: {data.BestTrade.toFixed(2)}%</div>
               <div>Worst Trade: {data.WorstTrade.toFixed(2)}%</div>
-              <button onClick={fetchPlot} className="mt-4 p-2 bg-green-600 hover:bg-green-700 rounded-lg">
-              Show Plot
-              </button>
+
             </div>
           </div>
         )}

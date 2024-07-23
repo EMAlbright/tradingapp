@@ -8,13 +8,13 @@ from backtesting.test import SMA, GOOG
 import pandas_datareader as web
 import datetime as dt
 import numpy as np
-from bokeh.embed import components
 import json
 from bokeh.io.export import get_screenshot_as_png
 from typing import List
 import talib
 from io import BytesIO
 from flask import Flask, jsonify, request, send_file, render_template_string
+
 
 app = Flask(__name__)
 CORS(app)
@@ -33,6 +33,8 @@ def getSector():
         try:
             stock = yf.Ticker(ticker)
             info = stock.info
+            if not info:
+                continue
             sector = info.get('sector', 'Unknown')
             summary = info.get('longBusinessSummary', 'Unknown')
             volume = info.get('volume', 'Unknown')
@@ -62,7 +64,6 @@ def getSector():
                                'analystOpinion': analystOpinion,
                                'analystCount': analystCount}
         except Exception as e:
-            stockInformation[ticker] = {'sector': 'Unknown'}
             print(f"Error fetching data for {ticker}: {e}") 
     return jsonify(stockInformation), 200
 

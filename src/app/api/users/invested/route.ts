@@ -29,22 +29,22 @@ export async function GET(request: NextRequest){
         }
         const positions = user.tradePositions || [];
         const key = process.env.NEXT_PUBLIC_FINNHUB_API;
-        const tickerHoldings = positions.map((position: iTradePosition) => position.symbol);
+        const tickerHoldings = positions.map((position: iTradePosition) => position.symbol.toUpperCase());
         // Fetch current prices for all symbols
         const tickerPrices = await Promise.all(
             tickerHoldings.map(async (symbol: string) => {
                 try {
                     //cryptos
-                    const response = await axios.get(`https://api.coincap.io/v2/assets/${symbol}`);
+                    const response = await axios.get(`https://api.coincap.io/v2/assets/${symbol.toLowerCase()}`);
                     return { symbol, priceUsd: parseFloat(response.data.data.priceUsd) };
                 } catch (cryptoError) {
-                    console.error(`${symbol}: ${cryptoError}`);
+                    console.error(`crypto error, ${symbol}: ${cryptoError}`);
                     try {
                         //stonks
                         const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${key}`);
                         return { symbol, priceUsd: response.data.c };
                     } catch (stockError) {
-                        console.error(`${symbol}: ${stockError}`);
+                        console.error(`stock error, ${symbol}: ${stockError}`);
                         return { symbol, priceUsd: null }; 
                     }
                 }
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest){
         
         let total = 0;
         const portfolio = positions.map((position: iTradePosition, index: number) => {
-            const currPriceObj = tickerPrices.find(price => price.symbol === position.symbol);
+            const currPriceObj = tickerPrices.find(price => price.symbol.toUpperCase() === position.symbol.toUpperCase());
             if (currPriceObj && currPriceObj.priceUsd !== null) {
                 const currPrice = currPriceObj.priceUsd;
                 const purchasePrice = position.price;

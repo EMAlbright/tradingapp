@@ -17,7 +17,7 @@ export default function Invested () {
                 setInvestment(response.data.invested);
                 setPercentage(response.data.overallPercentageChange);
                 setPL(response.data.PL);
-                console.log(response.data.invested);
+                console.log("invested: ", response.data.invested);
             } catch(error){
                 setError("error getting investment")
             } finally{

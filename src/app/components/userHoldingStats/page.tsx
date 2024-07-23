@@ -64,7 +64,7 @@ const UserHoldingStats = () => {
             try{
                 const res = await axios.get("../../api/users/portfolio");
                 setHoldings(res.data);
-                console.log(res.data);
+                console.log("stats", res.data);
             }
             catch(error) {
                 console.error("Error fetching portfolio")
@@ -146,8 +146,10 @@ return(
                                         <p className="text-sm mt-2 text-black"><span className="font-bold">Business Summary:</span> {data.summary}</p>
                                         <p className="text-sm text-black"><span className="font-bold">Volume Today:</span> {data.volume.toLocaleString()}</p>
                                         <p className="text-sm text-black"><span className="font-bold">Average Volume:</span> {data.avgVolume.toLocaleString()}</p>
-                                        <p className="text-sm text-black"><span className="font-bold">50 Day Price Average:</span> ${data.fiftyDayAverage.toFixed(2)}</p>
-                                        <p className="text-sm text-black"><span className="font-bold">200 Day Price Average:</span> ${data.twoHundredDayAverage.toFixed(2)}</p>
+                                        <p className="text-sm text-black"><span className="font-bold">50 Day Price Average:</span> 
+                                        {(() => {const value = Number(data.fiftyDayAverage);return !isNaN(value) ? `$${value.toFixed(2)}` : 'N/A';})()}</p>
+                                        <p className="text-sm text-black"><span className="font-bold">200 Day Price Average:</span> 
+                                        {(() => {const value = Number(data.twoHundredDayAverage);return !isNaN(value) ? `$${value.toFixed(2)}` : 'N/A';})()}</p>
                                     </details>
                                 </div>
                             ))}
