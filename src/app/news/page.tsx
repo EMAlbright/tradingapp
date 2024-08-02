@@ -38,12 +38,17 @@ const NewsWheel = () => {
     };
 
     fetchNews();
+
+    const dailyFetchInterval = setInterval(fetchNews, 24 * 60 * 60 * 1000);
     //every 10 sec rotate
     const interval = setInterval(() => {
         setCurrentArticleIndex((prevIndex) => (prevIndex+1) % articles.length)
     }, 90000);
 
-    return () => clearInterval(interval); 
+    return () =>{
+      clearInterval(dailyFetchInterval);
+      clearInterval(interval);
+    } 
   }, [articles.length]);
 
   if (loading) {
@@ -72,14 +77,18 @@ const NewsWheel = () => {
   };
 
   const nextArticleIndex = getNextArticleIndex();
-
+  const defaultImage = '/defaultMarket.jpg';
   return (
     <div className="news-wheel text-white">
          {articles.length > 0 && (
         <div className="news-item">
           <a href={articles[nextArticleIndex].url} target="_blank" rel="noopener noreferrer">
             <h3 className='title'>{articles[nextArticleIndex].title}</h3>
-            <img src={articles[nextArticleIndex].urlToImage} alt={articles[nextArticleIndex].title} />
+            <img src={articles[nextArticleIndex].urlToImage || defaultImage} alt={articles[nextArticleIndex].title}
+            onError={(e) => {
+              e.currentTarget.onerror = null; // prevents looping
+              e.currentTarget.src = defaultImage;
+            }} />
             <p>{articles[nextArticleIndex].description}</p>
             <p className='text-left text-sm'>{removeLetterAndAfter(articles[nextArticleIndex].publishedAt, "T")}</p>
           </a>
