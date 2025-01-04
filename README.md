@@ -1,5 +1,5 @@
 # Stock Market Simulator for New Investors
-
+### Note* The website has been shut down due to hosting costs
 ## Project Overview
 
 This project is an advanced Stock Market Simulator designed to provide a comprehensive learning platform for new investors. It offers various functionalities including backtesting trading strategies, trading cryptocurrencies and stocks, viewing portfolio performance, and more. The aim is to create an engaging and informative tool that helps users understand and navigate the stock market with confidence.
